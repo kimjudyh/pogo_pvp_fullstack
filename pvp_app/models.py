@@ -1,4 +1,5 @@
 from django.db import models
+from picklefield.fields import PickledObjectField
 
 # Create your models here.
 
@@ -12,3 +13,15 @@ class BaseStats(models.Model):
 
     def __str__(self):
         return self.species
+
+class PokemonPVP(models.Model):
+    species = models.CharField(max_length=100)
+    # League_dic definition
+    # { IV combo as a string: { rank: int, stat_product: float } }
+    # { '000': { 'rank': 123, 'stat_product': 123.33 }}
+    GL_dic = PickledObjectField()
+    UL_dic = PickledObjectField()
+    ML_dic = PickledObjectField()
+
+    def __str__(self):
+        return ('PVP stats')
