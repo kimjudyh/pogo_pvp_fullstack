@@ -14,15 +14,21 @@
       <label for="pokemon">Pokemon</label>
       <input type="text" id="pokemon" name="pokemon" autofocus required value="{{ pokemon }}">
       
-      <label for="attack">Attack IV</label>
-      <input type="text" id="attack" name="attack" value="{{ attack }}">
-      
-      <label for="defense">Defense IV</label>
-      <input type="text" id="defense" name="defense" value="{{ defense }}">
+      <div class="IVInputsContainer">
+        <div class="IVs">
+          <label for="attack">Attack IV</label>
+          <input type="text" id="attack" name="attack" value="{{ attack }}">
+          
+          <label for="defense">Defense IV</label>
+          <input type="text" id="defense" name="defense" value="{{ defense }}">
 
-      <label for="stamina">Stamina IV</label>
-      <input type="text" id="stamina" name="stamina" value="{{ stamina }}">
+          <label for="stamina">Stamina IV</label>
+          <input type="text" id="stamina" name="stamina" value="{{ stamina }}">
+        </div>
 
+      </div>
+
+      <button id="add">Add</button>
       <button type="submit">Analyze</button>
 
 
