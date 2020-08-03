@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block content %}
+<div>
+  <h2>welcome</h2>
+  <p>
+    <form action="{% url 'home' %}">
+      <button type="submit" class="reset">Reset</button>
+    </form>
+  </p>
+  <div>
+    <form method="POST" action="{% url 'analyze' %}">
+      {% csrf_token %}
+
+      <label for="pokemon">Pokemon</label>
+      <input type="text" id="pokemon" name="pokemon" autofocus required value="{{ pokemon }}">
+      
+      <label for="attack">Attack IV</label>
+      <input type="text" id="attack" name="attack" value="{{ attack }}">
+      
+      <label for="defense">Defense IV</label>
+      <input type="text" id="defense" name="defense" value="{{ defense }}">
+
+      <label for="stamina">Stamina IV</label>
+      <input type="text" id="stamina" name="stamina" value="{{ stamina }}">
+
+      <button type="submit">Analyze</button>
+
+
+    </form>
+  </div>
+  <div>
+    <h3>results</h3>
+    {% if pokemon %}
+      <h4>{{ pokemon }}</h4>
+      <p>
+        rank: {{ stats.rank }}
+      </p>
+      <p>
+        stat product: {{ stats.stat_product }}
+      </p>
+      <p>% of Max: {{ stats.percent_of_max }}</p>
+    {% endif %}
+  </div>
+
+</div>
+{% endblock %}

@@ -1,0 +1,43 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>PoGo PVP Stats</title>
+  <!-- Main CSS -->
+  <!-- <link rel="stylesheet" href="{% static 'css/styles.css' %}"> -->
+  <!--Favicon-->
+  <!-- <link rel="icon" type="image/png" sizes="16x16" href="{% static 'img/favicon-16x16.png' %}"> -->
+  
+</head>
+
+<body>
+
+  <!--Display messages from built-in Django message module-->
+  {% if messages %}
+  <div class="messages">
+    {% for message in messages %}
+      <h4 class="{{ message.tags }}">{{ message }}</h4>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  <main class="container">
+    {% block content %}
+    {% endblock %}
+  </main>
+
+<br/>
+
+  <footer class="container-fluid text-center">
+    <p>Made by Judy Kim</p>
+  </footer>
+
+  <script src="{% static 'app.js' %}"></script>
+</body>
+
+</html>
