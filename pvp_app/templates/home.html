@@ -15,16 +15,31 @@
       <input type="text" id="pokemon" name="pokemon" autofocus required value="{{ pokemon }}">
       
       <div class="IVInputsContainer">
+        {% if pokemon %}
+        {% for stats in stats_array %}
         <div class="IVs">
           <label for="attack">Attack IV</label>
-          <input type="text" id="attack" name="attack" value="{{ attack }}">
+          <input type="text" id="attack" name="attack" value="{{ stats.attack }}">
           
           <label for="defense">Defense IV</label>
-          <input type="text" id="defense" name="defense" value="{{ defense }}">
+          <input type="text" id="defense" name="defense" value="{{ stats.defense }}">
 
           <label for="stamina">Stamina IV</label>
-          <input type="text" id="stamina" name="stamina" value="{{ stamina }}">
+          <input type="text" id="stamina" name="stamina" value="{{ stats.stamina }}">
         </div>
+        {% endfor %}
+        {% else %}
+        <div class="IVs">
+          <label for="attack">Attack IV</label>
+          <input type="text" id="attack" name="attack" >
+          
+          <label for="defense">Defense IV</label>
+          <input type="text" id="defense" name="defense" >
+
+          <label for="stamina">Stamina IV</label>
+          <input type="text" id="stamina" name="stamina" >
+        </div>
+        {% endif %}
 
       </div>
 
