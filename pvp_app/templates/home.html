@@ -38,13 +38,18 @@
     <h3>results</h3>
     {% if pokemon %}
       <h4>{{ pokemon }}</h4>
-      <p>
-        rank: {{ stats.rank }}
-      </p>
-      <p>
-        stat product: {{ stats.stat_product }}
-      </p>
-      <p>% of Max: {{ stats.percent_of_max }}</p>
+      {% for stats in stats_array %}
+        <p>
+          Attack: {{ stats.attack }}, Defense: {{ stats.defense }}, Stamina: {{ stats.stamina }}
+        </p>
+        <p>
+          rank: {{ stats.rank }}
+        </p>
+        <p>
+          stat product: {{ stats.stat_product }}
+        </p>
+        <p>% of Max: {{ stats.percent_of_max }}</p>
+      {% endfor %}
     {% endif %}
   </div>
 
