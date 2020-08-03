@@ -5,10 +5,6 @@ from .LeagueStats import LeagueStats
 # Create your views here.
 
 def home(request):
-    pokemon = LeagueStats('skarmory')
-    stats = pokemon.get_stat_product('GL', 12, 14, 15)
-    # return JsonResponse(stats)
-
     template = 'home.html'
     return render(request, template)
 
@@ -16,7 +12,6 @@ def home(request):
 def analyze(request):
     if request.method == 'POST':
         print(request.POST)
-        print(request.POST['pokemon'])
 
         req_pokemon = request.POST['pokemon']
         attack = request.POST['attack']
