@@ -45,4 +45,19 @@ class PokemonPVP(models.Model):
     ML_dic = PickledObjectField()
 
     def __str__(self):
-        return ('PVP stats')
+        return (f'PVP stats for {self.species}')
+
+    def stats_have_been_calculated(self, league):
+        # return true if league stats have been calculated
+        # return false if dictionary is empty
+
+        if league == 'GL':
+            return bool(self.GL_dic)
+        elif league == 'UL':
+            return bool(self.UL_dic)
+        elif league == 'ML':
+            return bool(self.ML_dic)
+        else:
+            return
+
+    
