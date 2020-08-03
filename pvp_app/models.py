@@ -19,15 +19,15 @@ class BaseStats(models.Model):
 
 
 class CPMultipliers(models.Model):
-    level = models.DecimalField(max_digits=3, decimal_places=1)
-    cp_multiplier = models.DecimalField(max_digits=11, decimal_places=10)
+    level = models.FloatField()
+    cp_multiplier = models.FloatField()
 
     def __str__(self):
         return('Level CP Multipliers')
 
 
 class LevelPowerUpCosts(models.Model):
-    level = models.DecimalField(max_digits=3, decimal_places=1)
+    level = models.FloatField()
     stardust = models.IntegerField()
     candy = models.IntegerField()
 
