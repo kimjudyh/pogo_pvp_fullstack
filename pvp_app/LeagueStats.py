@@ -109,7 +109,7 @@ class LeagueStats:
                         self.stat_product_array.append(product)
 
                         # write to IV combo dic A/D/S
-                        IV_combo = str(j_atk) + str(k_def) + str(i_stam) 
+                        IV_combo = str(j_atk) + ',' + str(k_def) + ',' + str(i_stam) 
                         # in case of duplicate stat products for different IV combos
                         if product not in self.IV_combo_dic:
                             self.IV_combo_dic[product] = [IV_combo]
@@ -157,7 +157,7 @@ class LeagueStats:
 
         return 
 
-    def get_stat_product(self, league):
+    def get_stat_product(self, league, attack, defense, stamina):
         # get table from database for this pokemon, or create it if it doesn't exist
         PVP_table, created = PokemonPVP.objects.get_or_create(species__iexact=self.pokemon.lower(), 
         defaults=
@@ -165,8 +165,23 @@ class LeagueStats:
         })
 
         # check if database has calculated dictionary of stat products
-        if created:
+        if created or not PVP_table.stats_have_been_calculated(league):
             self.calculate_4096_stat_products(league)
+            # refetch from database
+            PVP_table = PokemonPVP.objects.get(species__iexact=self.pokemon.lower())
+
+        IV_combo = str(attack) + ',' + str(defense) + ',' + str(stamina)
+        
+        if league == 'GL':
+            print(PVP_table.GL_dic[IV_combo])
+            return PVP_table.GL_dic[IV_combo]
+        elif league == 'UL':
+            print(PVP_table.UL_dic[IV_combo])
+            return PVP_table.UL_dic[IV_combo]
+        elif league == 'ML':
+            print(PVP_table.ML_dic[IV_combo])
+            return PVP_table.ML_dic[IV_combo]
+        
 
 
 
