@@ -23,3 +23,31 @@ body.addEventListener('click', (event) => {
     event.target.select();
   }
 })
+
+// event listener to add new row of inputs
+const add_button = document.querySelector('#add');
+
+add_button.addEventListener('click', (event) => {
+  let input_rows = document.querySelector('.IVInputsContainer');
+  const new_row = document.createElement('div');
+  let IV_row = document.querySelector('.IVs');
+  new_row.innerHTML = IV_row.innerHTML;
+  new_row.classList.add('IVs');
+  input_rows.appendChild(new_row);
+})
+
+// event listener to add new row on tab press
+let input_rows = document.querySelector('.IVInputsContainer');
+
+input_rows.addEventListener('keydown', (event) => {
+  console.log(event)
+  if (event.key == 'Tab' && event.target.id == 'stamina') {
+    console.log('pressed Tab')
+    let input_rows = document.querySelector('.IVInputsContainer');
+    const new_row = document.createElement('div');
+    let IV_row = document.querySelector('.IVs');
+    new_row.innerHTML = IV_row.innerHTML;
+    new_row.classList.add('IVs');
+    input_rows.appendChild(new_row);
+  }
+})
