@@ -18,6 +18,23 @@ class BaseStats(models.Model):
         return f"attack: {self.attack}, defense: {self.defense}, stamina: {self.hp}"
 
 
+class CPMultipliers(models.Model):
+    level = models.DecimalField(max_digits=3, decimal_places=1)
+    cp_multiplier = models.DecimalField(max_digits=11, decimal_places=10)
+
+    def __str__(self):
+        return('Level CP Multipliers')
+
+
+class LevelPowerUpCosts(models.Model):
+    level = models.DecimalField(max_digits=3, decimal_places=1)
+    stardust = models.IntegerField()
+    candy = models.IntegerField()
+
+    def __str__(self):
+        return('Level Power Up Costs')
+
+
 class PokemonPVP(models.Model):
     species = models.CharField(max_length=100)
     # League_dic definition
