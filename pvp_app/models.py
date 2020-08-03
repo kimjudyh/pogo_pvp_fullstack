@@ -13,6 +13,10 @@ class BaseStats(models.Model):
 
     def __str__(self):
         return self.species
+    
+    def display_base_stats(self):
+        return f"attack: {self.attack}, defense: {self.defense}, stamina: {self.hp}"
+
 
 class PokemonPVP(models.Model):
     species = models.CharField(max_length=100)
