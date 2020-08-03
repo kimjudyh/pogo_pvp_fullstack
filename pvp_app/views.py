@@ -27,12 +27,13 @@ def analyze(request):
 
         # multiple entries: 'attack': [1, 3, 6] etc.
         for attack, defense, stamina in zip(a, d, s):
-            stats = pokemon.get_stat_product('GL', attack, defense, stamina)
-            stats['attack'] = attack
-            stats['defense'] = defense
-            stats['stamina'] = stamina
-            stats_array.append(stats)
-            print(stats_array)
+            if attack != '' and defense != '' and stamina != '':
+                stats = pokemon.get_stat_product('GL', attack, defense, stamina)
+                stats['attack'] = attack
+                stats['defense'] = defense
+                stats['stamina'] = stamina
+                stats_array.append(stats)
+                print(stats_array)
 
 
         # attack = request.POST['attack']
