@@ -46,13 +46,13 @@ class LeagueStats:
         defaults=
         { 'species': self.pokemon.lower(), 'GL_dic': {}, 'UL_dic': {}, 'ML_dic': {}
         })
-        print(PVP_table.species)
+        # print(PVP_table.species)
         
 
         # find base stats for pokemon (case-insensitive exact match)
         base_stats = BaseStats.objects.get(species__iexact=self.pokemon)
         # account for misspelled pokemon
-        print(base_stats.display_base_stats())
+        # print(base_stats.display_base_stats())
 
         stam_base = base_stats.hp
         atk_base = base_stats.attack
@@ -80,7 +80,7 @@ class LeagueStats:
         min_level = 1
         # min_cpm = cp_multipliers.get(level=min_level).cp_multiplier
         min_cpm = dic_cp_mult[min_level]
-        print(min_cpm)
+        # print(min_cpm)
 
 
         # stat_product = []
@@ -173,13 +173,13 @@ class LeagueStats:
         IV_combo = str(attack) + ',' + str(defense) + ',' + str(stamina)
         
         if league == 'GL':
-            print(PVP_table.GL_dic[IV_combo])
+            # print(PVP_table.GL_dic[IV_combo])
             return PVP_table.GL_dic[IV_combo]
         elif league == 'UL':
-            print(PVP_table.UL_dic[IV_combo])
+            # print(PVP_table.UL_dic[IV_combo])
             return PVP_table.UL_dic[IV_combo]
         elif league == 'ML':
-            print(PVP_table.ML_dic[IV_combo])
+            # print(PVP_table.ML_dic[IV_combo])
             return PVP_table.ML_dic[IV_combo]
         
 

@@ -13,12 +13,12 @@ def home(request):
 
 def analyze(request):
     if request.method == 'POST':
-        print(request.POST)
+        # print(request.POST)
 
         # deal with multiple entries
 
         req_pokemon = request.POST['pokemon']
-        evo_pokemon = request.POST['evo_pokemon']
+        evo_pokemon = request.POST['evo-pokemon']
 
         # get stat product for the requested evolution pokemon
         evo_pokemon_pvp = LeagueStats(evo_pokemon.lower())
@@ -47,7 +47,7 @@ def analyze(request):
         except:
             pass
 
-        print(analyze_GL, analyze_UL, analyze_ML)
+        # print(analyze_GL, analyze_UL, analyze_ML)
 
 
         # need to use getlist to save all values, otherwise will default to giving just last value
@@ -55,7 +55,7 @@ def analyze(request):
         a = request.POST.getlist('attack')
         d = request.POST.getlist('defense')
         s = request.POST.getlist('stamina')
-        print(c, a, d, s)
+        # print(c, a, d, s)
 
         # multiple entries: 'attack': [1, 3, 6] etc.
         for cp, attack, defense, stamina in zip(c, a, d, s):
@@ -76,7 +76,7 @@ def analyze(request):
 
                 if not is_valid:
                     # mark this entry as wrong to display on html
-                    print('invalid')
+                    # print('invalid')
                     power_up = {}
                 else:
                     # proceed
@@ -104,7 +104,7 @@ def analyze(request):
                     'power_up': power_up
                 })
 
-        print(results)
+        # print(results)
 
         template = 'home.html'
         context = {
@@ -123,11 +123,11 @@ def search(request, pokemon):
     # search for pokemon like Alolan Marowak by using ' ' + pokemon
     form_pokemon = ' ' + pokemon
     matches = BaseStats.objects.filter(species__istartswith=pokemon).order_by('species').values_list('species')
-    print('matches', matches)
+    # print('matches', matches)
     # returns a list of tuples: [('Charmander',), ('Charizard',)]
     matches = list(sum(matches, ()))
     form_matches = BaseStats.objects.filter(species__icontains=form_pokemon).values_list('species')
-    print('form matches', form_matches)
+    # print('form matches', form_matches)
     form_matches = list(sum(form_matches, ()))
 
     results = {'results': matches + form_matches}
