@@ -60,6 +60,7 @@ function copyRows(event) {
   }
 
   new_row.classList.add('IVs');
+  new_row.classList.add('form-inline');
   input_rows.appendChild(new_row);
   if (event.type == 'click') {
     cp_input.focus();
