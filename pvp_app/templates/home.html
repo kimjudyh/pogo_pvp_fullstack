@@ -3,64 +3,109 @@
   <h2>welcome</h2>
   <p>
     <form action="{% url 'home' %}">
-      <button type="submit" class="reset">Reset</button>
+      <button type="submit" class="reset btn btn-warning">Reset</button>
     </form>
   </p>
     <form method="POST" action="{% url 'analyze' %}">
       {% csrf_token %}
 
+
       <label for="pokemon">Pokemon</label>
       <input type="text" id="pokemon" name="pokemon" autofocus required value="{{ pokemon }}">
+
+      <label for="evo_pokemon">Evolution</label>
+      <input type="text" id="evo_pokemon" name="evo_pokemon" required value="{{ evolution }}">
       
       <div class="IVInputsContainer">
         {% if pokemon %}
-        {% for stats in stats_array %}
+        {% for result in results %}
         <div class="IVs">
+          <label for="cp">CP</label>
+          <input type="number" id="cp" name="cp" value="{{ result.inputs.cp }}">
+          
           <label for="attack">Attack IV</label>
-          <input type="text" id="attack" name="attack" value="{{ stats.attack }}">
+          <input type="number" id="attack" name="attack" value="{{ result.inputs.attack }}">
           
           <label for="defense">Defense IV</label>
-          <input type="text" id="defense" name="defense" value="{{ stats.defense }}">
+          <input type="number" id="defense" name="defense" value="{{ result.inputs.defense }}">
 
           <label for="stamina">Stamina IV</label>
-          <input type="text" id="stamina" name="stamina" value="{{ stats.stamina }}">
+          <input type="number" id="stamina" name="stamina" value="{{ result.inputs.stamina }}">
         </div>
         {% endfor %}
         {% else %}
         <div class="IVs">
+          <label for="cp">CP</label>
+          <input type="number" id="cp" name="cp">
+
           <label for="attack">Attack IV</label>
-          <input type="text" id="attack" name="attack" >
+          <input type="number" id="attack" name="attack" >
           
           <label for="defense">Defense IV</label>
-          <input type="text" id="defense" name="defense" >
+          <input type="number" id="defense" name="defense" >
 
           <label for="stamina">Stamina IV</label>
-          <input type="text" id="stamina" name="stamina" >
+          <input type="number" id="stamina" name="stamina" >
         </div>
         {% endif %}
-
       </div>
 
-      <button type="button" id="add">Add</button>
-      <button type="submit">Analyze</button>
+      <div class="league_choices">
+        <label for="GL">Great League</label>
+        <input type="checkbox" name="GL" id="GL" value="true">
+
+        <label for="UL">Ultra League</label>
+        <input type="checkbox" name="UL" id="UL" value="true">
+
+        <label for="ML">Master League</label>
+        <input type="checkbox" name="ML" id="ML" value="true">
+      </div>
+
+      <button type="button" class="btn btn-info" id="add">Add</button>
+      <button type="submit" class="btn btn-success analyze">Analyze</button>
 
 
     </form>
   <div>
     <h3>results</h3>
     {% if pokemon %}
-      <h4>{{ pokemon }}</h4>
-      {% for stats in stats_array %}
+      <h4>{{ pokemon }} --> {{ evolution }}</h4>
+      {% for result in results %}
         <p>
-          Attack: {{ stats.attack }}, Defense: {{ stats.defense }}, Stamina: {{ stats.stamina }}
+          CP: {{ result.inputs.cp }} Attack: {{ result.inputs.attack }}, Defense: {{ result.inputs.defense }}, Stamina: {{ result.inputs.stamina }}
+        </p>
+        {% if analyze_GL %}
+        <p>
+          GL rank: {{ result.stats.GL.rank }}
         </p>
         <p>
-          rank: {{ stats.rank }}
+          stat product: {{ result.stats.GL.stat_product }}
+        </p>
+        <p>% of Max: {{ result.stats.GL.percent_of_max }}</p>
+        <p>cp 1500: {{ result.power_up.GL.cp_1500  }}</p>
+        <p>power ups: {{ result.power_up.GL.power_up_count }}</p>
+        <br/>
+        {% endif %}
+        {% if analyze_UL %}
+          <p>
+            UL rank: {{ result.stats.UL.rank }}
+          </p>
+          <p>
+            stat product: {{ result.stats.UL.stat_product }}
+          </p>
+          <p>
+            cp 2500: {{ result.power_up.UL.cp_2500}}
+          </p>
+
+        {% endif %}
+        {% if analyze_ML %}
+        <p>
+          ML rank: {{ result.stats.ML.rank }}
         </p>
         <p>
-          stat product: {{ stats.stat_product }}
+          max cp: {{ result.power_up.ML.cp_max }}
         </p>
-        <p>% of Max: {{ stats.percent_of_max }}</p>
+        {% endif %}
       {% endfor %}
     {% endif %}
   </div>
