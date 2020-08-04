@@ -1,14 +1,44 @@
+
+/*====== DARK THEME ======*/
+.dark-theme {
+  background-color: #272727F0; /* opacity of F0 */ 
+  color: #F1F1F1DE!important; /* opacity of 87 */
+  padding: 15px;
+  border-radius: 4px; 
+}
+
+.dark-theme a {
+  color: #84C9FBDE; /* opacity of 87% */
+}
+
+.dark-theme .card {
+  background-color: #333333;
+  text-align: center;
+}
+
+.dark-theme .form-control {
+  background-color: #F1F1F1DE;
+}
+
+.dark-theme .form-control:focus {
+  background-color: #F1F1F1DE;
+}
+
+/* ======= ERROR MESSAGES ======== */
 .invalid {
-  background: pink;
+  background: pink!important;
 }
 
 .invalidCombo {
-  background: pink;
+  background-color: #FF8A85AD;
+  width: 80%;
+  text-align: center;
 }
 
-.border {
-  border: 1px solid black!important;
+.invalidCombo h5 {
+  margin: 4px 0 2px 0;
 }
+
 
 .delete {
   padding: 0px 4px;
@@ -21,15 +51,28 @@ input {
   margin: 4px;
 }
 
+button {
+  margin: 5px;
+}
+
 .w-20 {
   width: 20%!important;
 }
 
+.w-15 {
+  width: 15%!important;
+}
+
 .table {
-  font-size: .8rem;
+  font-size: .85rem;
   text-align: center;
 }
 
-.w-15 {
-  width: 15%!important;
+.table-dark {
+  background-color: #272727d0; /* opacity of F0 */ 
+  color: #F1F1F1DE; /* opacity of 87 */
+}
+
+.goodRank {
+  background-color: green;
 }
