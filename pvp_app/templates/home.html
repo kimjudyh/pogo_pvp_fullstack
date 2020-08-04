@@ -18,11 +18,14 @@
 
 
       <label for="pokemon">Pokemon</label>
-      <input type="text" id="pokemon" name="pokemon" autofocus required value="{{ pokemon }}">
+      <input type="text" list="auto-pokemon" id="pokemon" name="pokemon" autofocus required value="{{ pokemon }}">
+      <datalist id="auto-pokemon"></datalist>
 
-      <label for="evo_pokemon">Evolution</label>
-      <input type="text" id="evo_pokemon" name="evo_pokemon" required value="{{ evolution }}">
+      <label for="evo-pokemon">Evolution</label>
+      <input type="text" list="auto-evo-pokemon" id="evo-pokemon" name="evo-pokemon" required value="{{ evolution }}">
+      <datalist id="auto-evo-pokemon"></datalist>
       
+    
       <div class="IVInputsContainer">
       {% if pokemon %}
         {% for result in results %}
