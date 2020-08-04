@@ -228,6 +228,7 @@ class PowerUpStats:
         power_up_dic['GL'] = {
             'starting_cp': calc_cp, 
             'hp': calc_hp, 
+            'starting_level': self.starting_level,
             'power_up_count': power_up_count, 
             'cp_1500': cp_1500, 
             'stardust_cost': stardust_cost, 
@@ -236,16 +237,17 @@ class PowerUpStats:
             }
         power_up_dic['UL'] = {
             'cp_2500': cp_2500, 
-            'power_up_2500': power_up_2500, 
-            'stardust_2500': stardust_2500, 
-            'candy_2500': candy_2500, 
+            'power_up_count': power_up_2500, 
+            'stardust_cost': stardust_2500, 
+            'candy_cost': candy_2500, 
             'level_2500': level_2500
             }
         power_up_dic['ML'] = {
             'cp_max': cp_max, 
-            'power_up_max': power_up_max, 
-            'stardust_max': stardust_max, 
-            'candy_max': candy_max
+            'power_up_count': power_up_max, 
+            'stardust_cost': stardust_max, 
+            'candy_cost': candy_max,
+            'level_max': level_max
             }
 
 
