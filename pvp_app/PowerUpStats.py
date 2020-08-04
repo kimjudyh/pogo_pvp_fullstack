@@ -85,10 +85,10 @@ class PowerUpStats:
             if cp == calc_cp:
                 self.starting_cp_mult = i_cpm
                 self.starting_level = level
-                return 
+                return True
 
         print('error: wrong IVs')
-        return
+        return False
 
     def calc_evolve_cp(self, evo_pokemon, cp, atk_IV, def_IV, stam_IV):
         '''

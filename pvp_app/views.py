@@ -23,8 +23,6 @@ def analyze(request):
         evo_pokemon_pvp = LeagueStats(evo_pokemon.lower())
         pokemon_power_up = PowerUpStats(req_pokemon.lower())
         results = []
-        stats = {}
-        inputs = {}
         # stats_array = []
         # power_up_array = []
 
@@ -52,27 +50,44 @@ def analyze(request):
 
         # multiple entries: 'attack': [1, 3, 6] etc.
         for cp, attack, defense, stamina in zip(c, a, d, s):
-            if cp != '' and attack != '' and defense != '' and stamina != '':
-                if analyze_GL:
-                    stats_GL = evo_pokemon_pvp.get_stat_product('GL', int(attack), int(defense), int(stamina))
-                    stats['GL'] = stats_GL
-                if analyze_UL:
-                    stats_UL = evo_pokemon_pvp.get_stat_product('UL', int(attack), int(defense), int(stamina))
-                    stats['UL'] = stats_UL
-                if analyze_ML:
-                    stats_ML = evo_pokemon_pvp.get_stat_product('ML', int(attack), int(defense), int(stamina))
-                    stats['ML'] = stats_ML
+            stats = {}
+            inputs = {}
 
+            if cp != '' and attack != '' and defense != '' and stamina != '':
+                # save inputs so they can be used in template to fill out form
                 inputs['attack'] = attack
                 inputs['defense'] = defense
                 inputs['stamina'] = stamina
                 inputs['cp'] = cp
-                # stats_array.append(stats)
-                # print(stats_array)
 
-                power_up = pokemon_power_up.calc_evolve_cp(evo_pokemon.lower(), int(cp), int(attack), int(defense), int(stamina))
-                # power_up_array.append(power_up)
-                # print(power_up_array)
+                # verify IVs and CP
+                is_valid = pokemon_power_up.verify_IV_inputs(int(cp), int(attack), int(defense), int(stamina))
+
+                inputs['is_valid'] = is_valid
+
+                if not is_valid:
+                    # mark this entry as wrong to display on html
+                    print('invalid')
+                    power_up = {}
+                else:
+                    # proceed
+
+                    if analyze_GL:
+                        stats_GL = evo_pokemon_pvp.get_stat_product('GL', int(attack), int(defense), int(stamina))
+                        stats['GL'] = stats_GL
+                    if analyze_UL:
+                        stats_UL = evo_pokemon_pvp.get_stat_product('UL', int(attack), int(defense), int(stamina))
+                        stats['UL'] = stats_UL
+                    if analyze_ML:
+                        stats_ML = evo_pokemon_pvp.get_stat_product('ML', int(attack), int(defense), int(stamina))
+                        stats['ML'] = stats_ML
+
+                    # stats_array.append(stats)
+                    # print(stats_array)
+
+                    power_up = pokemon_power_up.calc_evolve_cp(evo_pokemon.lower(), int(cp), int(attack), int(defense), int(stamina))
+                    # power_up_array.append(power_up)
+                    # print(power_up_array)
 
                 results.append({
                     'inputs': inputs,
@@ -80,14 +95,7 @@ def analyze(request):
                     'power_up': power_up
                 })
 
-                print(results)
-
-
-        # attack = request.POST['attack']
-        # defense = request.POST['defense']
-        # stamina = request.POST['stamina']
-
-        # stats = pokemon.get_stat_product('GL', attack, defense, stamina)
+        print(results)
 
         template = 'home.html'
         context = {
@@ -96,12 +104,6 @@ def analyze(request):
             'analyze_GL': analyze_GL,
             'analyze_UL': analyze_UL,
             'analyze_ML': analyze_UL,
-            # 'cp': request.POST['cp'],
-            # 'attack': request.POST['attack'],
-            # 'defense': request.POST['defense'],
-            # 'stamina': request.POST['stamina'],
-            # 'stats_array': stats_array,
-            # 'power_up_array': power_up_array,
             'results': results
         }
         return render(request, template, context)
