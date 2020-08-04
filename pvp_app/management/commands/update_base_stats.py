@@ -5,6 +5,9 @@ from fullstack_pvp_project.settings import BASE_DIR
 import os
 
 def copy_from_csv():
+    # TODO: come up with way that can write base stats to database without needing special permissions
+    # in heroku db CLI, open psql and use:
+    # "\COPY pvp_app_basestats (p_id, species, hp, attack, defense) FROM 'pvp_app/pogostats_csv.csv' (format csv, header true);"
     # copies base stat data from CSV file to Postgresql table
     with connection.cursor() as cursor:
         cursor.execute("COPY pvp_app_basestats (p_id, species, hp, attack, defense) FROM %s (format csv, header true);", [os.path.join(BASE_DIR, 'pvp_app/pogostats_csv.csv')])

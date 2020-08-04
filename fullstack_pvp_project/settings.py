@@ -27,7 +27,8 @@ SECRET_KEY = os.environ['PVP_SECRET_KEY']
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = True
 DEBUG=False
-# DEBUG = os.environ['PVP_DEBUG']
+# when debug set to false, python manage.py collectstatic
+# DEBUG = os.environ['PVP_DEBUG'] doesn't work...
 
 # updated for heroku deployment
 ALLOWED_HOSTS = ['0.0.0.0', 'localhost', 'https://fullstack-pvp.herokuapp.com/']
