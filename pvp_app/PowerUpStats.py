@@ -95,7 +95,7 @@ class PowerUpStats:
         :param evo_pokemon: string of evolution pokemon
         '''
 
-        self.verify_IV_inputs(cp, atk_IV, def_IV, stam_IV)
+        # self.verify_IV_inputs(cp, atk_IV, def_IV, stam_IV)
 
         # initialize vars for stardust and candy cost
         stardust_cost = 0
