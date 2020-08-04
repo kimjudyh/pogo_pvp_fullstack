@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
+# added for heroku deployment
 import django_heroku
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -28,6 +29,7 @@ SECRET_KEY = os.environ['PVP_SECRET_KEY']
 DEBUG=False
 # DEBUG = os.environ['PVP_DEBUG']
 
+# updated for heroku deployment
 ALLOWED_HOSTS = ['0.0.0.0', 'localhost', 'https://fullstack-pvp.herokuapp.com/']
 
 
@@ -124,4 +126,6 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+# added for heroku deployment
+STATIC_ROOT = os.path.join(BASE_DIR, ‘staticfiles’)
 django_heroku.settings(locals())
