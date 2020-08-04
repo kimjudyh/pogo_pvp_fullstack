@@ -31,13 +31,13 @@
       <div class="IVInputsContainer ">
       {% if pokemon %}
         {% for result in results %}
-
-        <div class="IVs form-inline">
           {% if not result.inputs.is_valid %}
           <div class="invalidCombo">
-            <h3>Wrong CP & IV combination</h3>
+            <h5>Wrong CP & IV combination below</h5>
           </div>
           {% endif %}
+
+        <div class="IVs form-inline">
           <button type="button" class="delete btn btn-danger" tabindex="-1" >-</button>
           <label for="cp" class="sr-only">CP</label>
           <input class="form-control form-control-sm w-20" type="number" id="cp" name="cp" value="{{ result.inputs.cp }}" placeholder="CP">
@@ -96,10 +96,11 @@
 
 
     </form>
+    <br/>
   <div id="results-link">
     <h3 >results</h3>
     {% if pokemon %}
-      <h4>{{ pokemon }} --> {{ evolution }}</h4>
+      <h4>{{ pokemon }} -> {{ evolution }}</h4>
       {% for result in results %}
         <div class="row no-gutters">
           <div class="col col-2">CP: {{ result.inputs.cp }}</div>
@@ -133,7 +134,11 @@
           </thead>
           <tbody>
           {% if analyze_GL %}
-            <tr>
+            {% if result.stats.GL.rank < 200 %}
+            <tr class="goodRank">
+              {% else %}
+              <tr>
+            {% endif %}
               <td>GL</td>
               <td>{{ result.stats.GL.rank }}</td>
               <td>{{ result.power_up.GL.cp_1500 }}</td>
@@ -145,7 +150,11 @@
             </tr>
           {% endif %}
           {% if analyze_UL %}
-          <tr>
+            {% if result.stats.UL.rank < 200 %}
+            <tr class="goodRank">
+              {% else %}
+              <tr>
+            {% endif %}
             <td>UL</div>
             <td>{{ result.stats.UL.rank }}</td>
             <td>{{ result.power_up.UL.cp_2500 }}</td>
@@ -158,7 +167,11 @@
 
           {% endif %}
           {% if analyze_ML %}
-          <tr>
+            {% if result.stats.ML.rank < 200 %}
+            <tr class="goodRank">
+              {% else %}
+              <tr>
+            {% endif %}
             <td>ML</div>
             <td>{{ result.stats.ML.rank }}</td>
             <td>{{ result.power_up.ML.cp_max }}</td>
