@@ -32,8 +32,16 @@ function copyRows(event) {
   let IV_row = document.querySelector('.IVs');
   new_row.innerHTML = IV_row.innerHTML;
 
+  // remove error message div
+  let error_elems = new_row.getElementsByClassName('invalidCombo') 
+    for (let i = 0; i < error_elems.length; i++) {
+      error_elems[i].remove();
+    }
+  
+
   let delete_elems = new_row.getElementsByClassName('delete');
   for (let i = 0; i < delete_elems.length; i++) {
+    // enable deletion of new row
     delete_elems[i].removeAttribute('disabled');
   }
 
@@ -44,7 +52,6 @@ function copyRows(event) {
     if (input_elems[i].id == 'cp') {
       cp_input = input_elems[i]
     }
-
 
     // remove values from previous inputs
     input_elems[i].removeAttribute('value');
@@ -134,6 +141,8 @@ input_rows.addEventListener('click', (event) => {
   if (event.target.classList.contains('delete')) {
     let row_to_delete = event.target.parentElement;
     row_to_delete.remove();
+    checkForInvalidInputs();
+    // remove any Wrong CP & IV combo messages
   }
 
 })
