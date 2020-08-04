@@ -118,54 +118,59 @@
         {% if not result.inputs.is_valid %}
           <h6>Invalid CP & IV Combo</h4>
         {% else %}
-          <div class="row no-gutters border">
-            <div class="col">League</div>
-            <div class="col">Rank</div>
-            <div class="col">Best CP</div>
-            <div class="col">Best Level</div>
-            <div class="col">Starting CP</div>
-            <div class="col">Power Ups</div>
-            <div class="col">Stardust</div>
-            <div class="col">Candy</div>
-          </div>
+        <table class="table table-sm table-hover table-dark">
+          <thead>
+            <tr>
+              <th>League</th>
+              <th>Rank</th>
+              <th>Best CP</th>
+              <th>Best Level</th>
+              <th>Starting CP</th>
+              <th>Power Ups</th>
+              <th>Stardust</th>
+              <th>Candy</th>
+            </tr>
+          </thead>
+          <tbody>
           {% if analyze_GL %}
-          <div class="row no-gutters border">
-            <div class="col">GL</div>
-            <div class="col">{{ result.stats.GL.rank }}</div>
-            <div class="col">{{ result.power_up.GL.cp_1500 }}</div>
-            <div class="col">{{ result.power_up.GL.level_1500 }}</div>
-
-            <div class="col">{{ result.power_up.GL.starting_cp }}</div>
-            <div class="col">{{ result.power_up.GL.power_up_count }}</div>
-            <div class="col">{{ result.power_up.GL.stardust_cost }}</div>
-            <div class="col">{{ result.power_up.GL.candy_cost }}</div>
-          </div>
+            <tr>
+              <td>GL</td>
+              <td>{{ result.stats.GL.rank }}</td>
+              <td>{{ result.power_up.GL.cp_1500 }}</td>
+              <td>{{ result.power_up.GL.level_1500 }}</td>
+              <td>{{ result.power_up.GL.starting_cp }}</td>
+              <td>{{ result.power_up.GL.power_up_count }}</td>
+              <td>{{ result.power_up.GL.stardust_cost }}</td>
+              <td>{{ result.power_up.GL.candy_cost }}</td>
+            </tr>
           {% endif %}
           {% if analyze_UL %}
-          <div class="row no-gutters border">
-            <div class="col">UL</div>
-            <div class="col">{{ result.stats.UL.rank }}</div>
-            <div class="col">{{ result.power_up.UL.cp_2500 }}</div>
-            <div class="col">{{ result.power_up.UL.level_2500 }}</div>
-            <div class="col">{{ result.power_up.GL.starting_cp }}</div>
-            <div class="col">{{ result.power_up.UL.power_up_count }}</div>
-            <div class="col">{{ result.power_up.UL.stardust_cost }}</div>
-            <div class="col">{{ result.power_up.UL.candy_cost }}</div>
-          </div>
+          <tr>
+            <td>UL</div>
+            <td>{{ result.stats.UL.rank }}</td>
+            <td>{{ result.power_up.UL.cp_2500 }}</td>
+            <td>{{ result.power_up.UL.level_2500 }}</td>
+            <td>{{ result.power_up.GL.starting_cp }}</td>
+            <td>{{ result.power_up.UL.power_up_count }}</td>
+            <td>{{ result.power_up.UL.stardust_cost }}</td>
+            <td>{{ result.power_up.UL.candy_cost }}</td>
+          </tr>
 
           {% endif %}
           {% if analyze_ML %}
-          <div class="row no-gutters border">
-            <div class="col">ML</div>
-            <div class="col">{{ result.stats.ML.rank }}</div>
-            <div class="col">{{ result.power_up.ML.cp_max }}</div>
-            <div class="col">{{ result.power_up.ML.level_max }}</div>
-            <div class="col">{{ result.power_up.GL.starting_cp }}</div>
-            <div class="col">{{ result.power_up.ML.power_up_count }}</div>
-            <div class="col">{{ result.power_up.ML.stardust_cost }}</div>
-            <div class="col">{{ result.power_up.ML.candy_cost }}</div>
-          </div>
+          <tr>
+            <td>ML</div>
+            <td>{{ result.stats.ML.rank }}</td>
+            <td>{{ result.power_up.ML.cp_max }}</td>
+            <td>{{ result.power_up.ML.level_max }}</td>
+            <td>{{ result.power_up.GL.starting_cp }}</td>
+            <td>{{ result.power_up.ML.power_up_count }}</td>
+            <td>{{ result.power_up.ML.stardust_cost }}</td>
+            <td>{{ result.power_up.ML.candy_cost }}</td>
+          </tr>
           {% endif %}
+          </tbody>
+        </table>
         {% endif %}
         <br/>
       {% endfor %}

@@ -25,6 +25,11 @@ input {
   width: 20%!important;
 }
 
+.table {
+  font-size: .8rem;
+  text-align: center;
+}
+
 .w-15 {
   width: 15%!important;
 }
