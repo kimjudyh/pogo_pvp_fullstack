@@ -6,11 +6,10 @@ import os
 class PowerUpStats:
     def __init__(self, pokemon):
         self.pokemon = pokemon
-        self.power_up_dic = {}
 
         # find base stats for pokemon (case-insensitive exact match)
         base_stats = BaseStats.objects.get(species__iexact=self.pokemon)
-        # account for misspelled pokemon
+        # TODO: account for misspelled pokemon
         print(base_stats.display_base_stats())
 
         self.stam_base = base_stats.hp
@@ -94,12 +93,6 @@ class PowerUpStats:
     def calc_evolve_cp(self, evo_pokemon, cp, atk_IV, def_IV, stam_IV):
         '''
         :param evo_pokemon: string of evolution pokemon
-        :param d_list_levels: dict of narrowed down key cp multiplier (float): 
-            value level (float)
-        :param IV: list of lists of [level (float), stam IV (int), atk IV (int),
-            def IV (int), IV percent (float)
-        :param dic_cp_mult: dict of level (float): cp multiplier (float) of all 40 levels
-        :return evolve_stats: list of lists of [cp (int), hp (int)] 
         '''
 
         self.verify_IV_inputs(cp, atk_IV, def_IV, stam_IV)
@@ -125,7 +118,6 @@ class PowerUpStats:
         # calculate hp, rounding down
         calc_hp = m.floor(self.starting_cp_mult*(stam_base + stam_IV))
 
-        #print("cp, hp", calc_cp, calc_hp)
 
         # calculate closest cp to 1500
         cp_1500 = calc_cp
@@ -232,7 +224,8 @@ class PowerUpStats:
                 power_up_max += 1
                 level_max += 0.5
 
-        self.power_up_dic['GL'] = {
+        power_up_dic = {}
+        power_up_dic['GL'] = {
             'starting_cp': calc_cp, 
             'hp': calc_hp, 
             'power_up_count': power_up_count, 
@@ -241,21 +234,19 @@ class PowerUpStats:
             'candy_cost': candy_cost, 
             'level_1500': level_1500
             }
-        self.power_up_dic['UL'] = {
+        power_up_dic['UL'] = {
             'cp_2500': cp_2500, 
             'power_up_2500': power_up_2500, 
             'stardust_2500': stardust_2500, 
             'candy_2500': candy_2500, 
             'level_2500': level_2500
             }
-        self.power_up_dic['ML'] = {
+        power_up_dic['ML'] = {
             'cp_max': cp_max, 
             'power_up_max': power_up_max, 
             'stardust_max': stardust_max, 
             'candy_max': candy_max
             }
 
-        #evolve_stats = [calc_cp, calc_hp, power_up_count, cp_1500, stardust_cost, candy_cost,\
-                #cp_2500, power_up_2500, stardust_2500, candy_2500]
 
-        return 
+        return power_up_dic
