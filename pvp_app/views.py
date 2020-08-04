@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import JsonResponse, HttpResponse
 from .LeagueStats import LeagueStats
 from .PowerUpStats import PowerUpStats
+from .models import BaseStats
 
 # Create your views here.
 
@@ -115,11 +116,20 @@ def analyze(request):
             'results': results
         }
         return render(request, template, context)
-        # return JsonResponse(stats)
-
-
-        # return HttpResponse('<h1>yo</h1>')
-
 
     
+def search(request, pokemon):
+    # use provided string representing part of pokemon's name to search for matches in the BaseStats model
+    # search for pokemon like Alolan Marowak by using ' ' + pokemon
+    form_pokemon = ' ' + pokemon
+    matches = BaseStats.objects.filter(species__istartswith=pokemon).order_by('species').values_list('species')
+    print('matches', matches)
+    # returns a list of tuples: [('Charmander',), ('Charizard',)]
+    matches = list(sum(matches, ()))
+    form_matches = BaseStats.objects.filter(species__icontains=form_pokemon).values_list('species')
+    print('form matches', form_matches)
+    form_matches = list(sum(form_matches, ()))
 
+    results = {'results': matches + form_matches}
+
+    return JsonResponse(results)
