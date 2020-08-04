@@ -12,7 +12,9 @@ def home(request):
 
 
 def analyze(request):
-    if request.method == 'POST':
+    if request.method == 'GET':
+        return redirect('home')
+    elif request.method == 'POST':
         # print(request.POST)
 
         # deal with multiple entries
