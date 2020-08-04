@@ -33,12 +33,20 @@ def analyze(request):
         try:
             if request.POST['GL'] == 'true':
                 analyze_GL = True
+        except:
+            pass
+        try:
             if request.POST['UL'] == 'true':
                 analyze_UL = True
+        except:
+            pass
+        try:
             if request.POST['ML'] == 'true':
                 analyze_ML = True
         except:
             pass
+
+        print(analyze_GL, analyze_UL, analyze_ML)
 
 
         # need to use getlist to save all values, otherwise will default to giving just last value
@@ -103,7 +111,7 @@ def analyze(request):
             'evolution': evo_pokemon,
             'analyze_GL': analyze_GL,
             'analyze_UL': analyze_UL,
-            'analyze_ML': analyze_UL,
+            'analyze_ML': analyze_ML,
             'results': results
         }
         return render(request, template, context)
