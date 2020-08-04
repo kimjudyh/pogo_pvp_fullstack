@@ -1,4 +1,5 @@
 // javascript to autocomplete Pokemon and Evolution Pokemon fields
+console.log('autocomplete js connected')
 
 // function to get CSRF cookie from token
 function getCookie(name) {
@@ -19,6 +20,54 @@ function getCookie(name) {
 
 const csrftoken = getCookie('csrftoken');
 
+let pokemon = { options: [] };
+let evoPokemon = { options: [] };
 // make GET request to backend
+function findMatches(event) {
+    let searchString = event.target.value;
+    let matches_array = [];
+    // fetch from API endpoint 'search/<str:pokemon>'
+    fetch(
+        `/search/${searchString}`,
+        {
+            method: 'GET',
+            headers: {
+            Accept: "application/json",
+            "X-CSRFToken": csrftoken,
+            }
+        }
+    )
+    .then((res) => res.json())
+    .then((data) => {
+        // take JSON and convert results list into datalist options
+        // console.log(data.results);
+        matches_array = data.results;
+        let pokemonDataList = document.querySelector('#auto-pokemon');
+        let evoPokemonDataList = document.querySelector('#auto-evo-pokemon')
+        // TODO: fix flickering
+        // delete old options
+        pokemonDataList.innerHTML = '';
+        evoPokemonDataList.innerHTML = '';
+        // create option elements, append to datalist
+        matches_array.forEach((match) => {
+            let option = document.createElement('option');
+            option.value = match;
+            if (event.target.id == 'pokemon') {
+                pokemonDataList.appendChild(option);
+            }
+            else if (event.target.id == 'evo-pokemon') {
+                evoPokemonDataList.appendChild(option);
+            }
+        })
+    })
+    .catch((err) => console.log(err))
 
-// use values to populate a dropdown list
+}
+
+let pokemonInput = document.querySelector('#pokemon');
+let evoPokemonInput = document.querySelector('#evo-pokemon');
+// add event listener to pokemon input field
+pokemonInput.addEventListener('keyup', findMatches);
+// add event listener to evo pokemon input field
+evoPokemonInput.addEventListener('keyup', findMatches);
+
