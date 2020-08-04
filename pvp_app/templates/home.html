@@ -109,13 +109,6 @@
           <div class="col col-2">S: {{ result.inputs.stamina}}</div>
           <div class="col col-4">Starting Level: {{ result.power_up.GL.starting_level }}</div>
         </div>
-        <!-- <div class="row border">
-          <div class="col">{{ result.inputs.cp }}</div>
-          <div class="col">{{ result.inputs.attack }}</div>
-          <div class="col">{{ result.inputs.defense }}</div>
-          <div class="col">{{ result.inputs.stamina }}</div>
-          <div class="col">{{ result.power_up.GL.starting_level }}</div>
-        </div> -->
         {% if not result.inputs.is_valid %}
           <h6>Invalid CP & IV Combo</h4>
         {% else %}
