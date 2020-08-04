@@ -1,6 +1,13 @@
 {% extends 'base.html' %}
 {% block content %}
-  <h2>welcome</h2>
+  {% if pokemon %}
+  <!-- redirect to results part of page -->
+  <script>
+    window.location.href = '#results-link';
+  </script>
+  {% endif %}
+  <h2 id="welcome-link">welcome</h2>
+  <a href="#results-link">Results</a>
   <p>
     <form action="{% url 'home' %}">
       <button type="submit" class="reset btn btn-warning">Reset</button>
@@ -20,6 +27,11 @@
         {% if pokemon %}
         {% for result in results %}
         <div class="IVs">
+          {% if not result.inputs.is_valid %}
+          <div class="invalidCombo">
+            <h3>Wrong CP & IV combination</h3>
+          </div>
+          {% endif %}
           <button type="button" class="delete btn btn-danger" tabindex="-1" >-</button>
           <label for="cp">CP</label>
           <input type="number" id="cp" name="cp" value="{{ result.inputs.cp }}">
@@ -36,6 +48,7 @@
         {% endfor %}
         {% else %}
         <div class="IVs">
+          <!-- delete button that's disabled for first row -->
           <button type="button" class="delete btn btn-danger" tabindex="-1" disabled>-</button>
           <label for="cp">CP</label>
           <input type="number" id="cp" name="cp">
@@ -68,14 +81,17 @@
 
 
     </form>
-  <div>
-    <h3>results</h3>
+  <div id="results-link">
+    <h3 >results</h3>
     {% if pokemon %}
       <h4>{{ pokemon }} --> {{ evolution }}</h4>
       {% for result in results %}
         <p>
           CP: {{ result.inputs.cp }} Attack: {{ result.inputs.attack }}, Defense: {{ result.inputs.defense }}, Stamina: {{ result.inputs.stamina }}
         </p>
+        {% if not result.inputs.is_valid %}
+        <h4>Invalid CP & IV Combo</h4>
+        {% else %}
         {% if analyze_GL %}
         <p>
           GL rank: {{ result.stats.GL.rank }}
@@ -108,8 +124,10 @@
           max cp: {{ result.power_up.ML.cp_max }}
         </p>
         {% endif %}
+        {% endif %}
       {% endfor %}
     {% endif %}
   </div>
+  <a href="#welcome-link">Back to Top</a>
 
 {% endblock %}
