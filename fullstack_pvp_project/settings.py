@@ -28,7 +28,7 @@ DEBUG = True
 # DEBUG=False
 # DEBUG = os.environ['PVP_DEBUG']
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['0.0.0.0', 'localhost', 'https://fullstack-pvp.herokuapp.com/']
 
 
 # Application definition
