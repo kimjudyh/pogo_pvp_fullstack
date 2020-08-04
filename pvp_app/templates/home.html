@@ -20,6 +20,7 @@
         {% if pokemon %}
         {% for result in results %}
         <div class="IVs">
+          <button type="button" class="delete btn btn-danger" tabindex="-1" >-</button>
           <label for="cp">CP</label>
           <input type="number" id="cp" name="cp" value="{{ result.inputs.cp }}">
           
@@ -35,6 +36,7 @@
         {% endfor %}
         {% else %}
         <div class="IVs">
+          <button type="button" class="delete btn btn-danger" tabindex="-1" disabled>-</button>
           <label for="cp">CP</label>
           <input type="number" id="cp" name="cp">
 

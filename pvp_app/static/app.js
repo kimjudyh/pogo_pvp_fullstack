@@ -32,18 +32,24 @@ function copyRows(event) {
   let IV_row = document.querySelector('.IVs');
   new_row.innerHTML = IV_row.innerHTML;
 
-  let elems = new_row.getElementsByTagName('input');
+  let delete_elems = new_row.getElementsByClassName('delete');
+  for (let i = 0; i < delete_elems.length; i++) {
+    delete_elems[i].removeAttribute('disabled');
+  }
+
+  let input_elems = new_row.getElementsByTagName('input');
   let cp_input = undefined;
   
-  for (let i = 0; i < elems.length; i++) {
-    if (elems[i].id == 'cp') {
-      cp_input = elems[i]
+  for (let i = 0; i < input_elems.length; i++) {
+    if (input_elems[i].id == 'cp') {
+      cp_input = input_elems[i]
     }
 
+
     // remove values from previous inputs
-    elems[i].removeAttribute('value');
+    input_elems[i].removeAttribute('value');
     // remove invalid flag that would turn background pink
-    elems[i].classList.remove('invalid');
+    input_elems[i].classList.remove('invalid');
   }
 
   new_row.classList.add('IVs');
@@ -66,7 +72,7 @@ input_rows.addEventListener('keydown', (event) => {
   console.log(event)
   // don't perform action if shift + tab pressed
   // make new row if tab pressed, input is stamina field, and it's the last row of inputs in the form
-  if (event.key == 'Tab' && event.shiftKey == false && event.target.id == 'stamina' && event.target.parentElement.nextElementSibling == null) {
+  if (event.key == 'Tab' && event.shiftKey == false && event.target.id == 'stamina' && event.target.parentElement.nextElementSibling == null && event.target.value != '') {
     console.log('pressed Tab');
     copyRows(event);
   }
@@ -121,3 +127,13 @@ function checkForInvalidInputs() {
   }
 
 }
+
+// delete row using button
+// let delete_button = document.querySelector('.delete');
+input_rows.addEventListener('click', (event) => {
+  if (event.target.classList.contains('delete')) {
+    let row_to_delete = event.target.parentElement;
+    row_to_delete.remove();
+  }
+
+})
