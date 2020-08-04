@@ -25,7 +25,8 @@ SECRET_KEY = os.environ['PVP_SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = True
-DEBUG = os.environ['PVP_DEBUG']
+DEBUG=False
+# DEBUG = os.environ['PVP_DEBUG']
 
 ALLOWED_HOSTS = []
 
