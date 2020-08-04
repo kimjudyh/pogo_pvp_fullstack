@@ -16,67 +16,79 @@
     <form method="POST" action="{% url 'analyze' %}">
       {% csrf_token %}
 
-
-      <label for="pokemon">Pokemon</label>
-      <input type="text" list="auto-pokemon" id="pokemon" name="pokemon" autofocus required value="{{ pokemon }}">
+      <div class="form-inline">
+      <label for="pokemon" class="sr-only">Pokemon</label>
+      <input type="text" list="auto-pokemon" id="pokemon" name="pokemon" autofocus required value="{{ pokemon }}" placeholder="Pokemon" class="form-control form-control-sm">
       <datalist id="auto-pokemon"></datalist>
 
-      <label for="evo-pokemon">Evolution</label>
-      <input type="text" list="auto-evo-pokemon" id="evo-pokemon" name="evo-pokemon" required value="{{ evolution }}">
+      <label for="evo-pokemon" class="sr-only">Evolution</label>
+      <input type="text" list="auto-evo-pokemon" id="evo-pokemon" name="evo-pokemon" required value="{{ evolution }}" placeholder="Evolution Pokemon" class="form-control form-control-sm">
       <datalist id="auto-evo-pokemon"></datalist>
+
+      </div>
       
     
-      <div class="IVInputsContainer">
+      <div class="IVInputsContainer ">
       {% if pokemon %}
         {% for result in results %}
-        <div class="IVs">
+
+        <div class="IVs form-inline">
           {% if not result.inputs.is_valid %}
           <div class="invalidCombo">
             <h3>Wrong CP & IV combination</h3>
           </div>
           {% endif %}
           <button type="button" class="delete btn btn-danger" tabindex="-1" >-</button>
-          <label for="cp">CP</label>
-          <input type="number" id="cp" name="cp" value="{{ result.inputs.cp }}">
+          <label for="cp" class="sr-only">CP</label>
+          <input class="form-control form-control-sm w-20" type="number" id="cp" name="cp" value="{{ result.inputs.cp }}" placeholder="CP">
           
-          <label for="attack">Attack IV</label>
-          <input type="number" id="attack" name="attack" value="{{ result.inputs.attack }}">
+          <label for="attack" class="sr-only">Attack IV</label>
+          <input class="form-control form-control-sm w-15" type="number" id="attack" name="attack" value="{{ result.inputs.attack }}" placeholder="ATK">
           
-          <label for="defense">Defense IV</label>
-          <input type="number" id="defense" name="defense" value="{{ result.inputs.defense }}">
+          <label for="defense" class="sr-only">Defense IV</label>
+          <input class="form-control form-control-sm w-15" type="number" id="defense" name="defense" value="{{ result.inputs.defense }}" placeholder="DEF">
 
-          <label for="stamina">Stamina IV</label>
-          <input type="number" id="stamina" name="stamina" value="{{ result.inputs.stamina }}">
+          <label for="stamina" class="sr-only">Stamina IV</label>
+          <input class="form-control form-control-sm w-15" type="number" id="stamina" name="stamina" value="{{ result.inputs.stamina }}" placeholder="STM">
         </div>
         {% endfor %}
       {% else %}
-        <div class="IVs">
+        <div class="IVs form-inline">
           <!-- delete button that's disabled for first row -->
           <button type="button" class="delete btn btn-danger" tabindex="-1" disabled>-</button>
-          <label for="cp">CP</label>
-          <input type="number" id="cp" name="cp">
+          <label for="cp" class="sr-only">CP</label>
+          <input class="form-control form-control-sm w-20" type="number" id="cp" name="cp" size="5" placeholder="CP">
 
-          <label for="attack">Attack IV</label>
-          <input type="number" id="attack" name="attack" >
+          <label for="attack" class="sr-only">Attack IV</label>
+          <input class="form-control form-control-sm w-15" type="number" id="attack" name="attack" placeholder="ATK">
           
-          <label for="defense">Defense IV</label>
-          <input type="number" id="defense" name="defense" >
+          <label for="defense" class="sr-only">Defense IV</label>
+          <input class="form-control form-control-sm w-15" type="number" id="defense" name="defense" placeholder="DEF">
 
-          <label for="stamina">Stamina IV</label>
-          <input type="number" id="stamina" name="stamina" >
+          <label for="stamina" class="sr-only">Stamina IV</label>
+          <input class="form-control form-control-sm w-15" type="number" id="stamina" name="stamina" placeholder="STM">
         </div>
       {% endif %}
       </div>
 
       <div class="league_choices">
-        <label for="GL">Great League</label>
-        <input type="checkbox" name="GL" id="GL" value="true">
+        <div class="form-check form-check-inline">
+        <input type="checkbox" name="GL" id="GL" value="true" class="form-check-input">
+        <label for="GL" class="form-check-label">Great League</label>
 
-        <label for="UL">Ultra League</label>
-        <input type="checkbox" name="UL" id="UL" value="true">
+        </div>
+        <div class="form-check form-check-inline">
+        <input type="checkbox" name="UL" id="UL" value="true" class="form-check-input">
+        <label for="UL" class="form-check-label">Ultra League</label>
 
-        <label for="ML">Master League</label>
-        <input type="checkbox" name="ML" id="ML" value="true">
+        </div>
+
+        <div class="form-check form-check-inline">
+        <input type="checkbox" name="ML" id="ML" value="true" class="form-check-input">
+        <label for="ML" class="form-check-label">Master League</label>
+
+        </div>
+
       </div>
 
       <button type="button" class="btn btn-info" id="add">Add</button>
@@ -89,12 +101,12 @@
     {% if pokemon %}
       <h4>{{ pokemon }} --> {{ evolution }}</h4>
       {% for result in results %}
-        <div class="row border">
-          <div class="col">CP: {{ result.inputs.cp }}</div>
-          <div class="col">A: {{ result.inputs.attack }}</div>
-          <div class="col">D: {{ result.inputs.defense }}</div>
-          <div class="col">S: {{ result.inputs.stamina}}</div>
-          <div class="col">Starting Level {{ result.power_up.GL.starting_level }}</div>
+        <div class="row no-gutters">
+          <div class="col col-2">CP: {{ result.inputs.cp }}</div>
+          <div class="col col-2">A: {{ result.inputs.attack }}</div>
+          <div class="col col-2">D: {{ result.inputs.defense }}</div>
+          <div class="col col-2">S: {{ result.inputs.stamina}}</div>
+          <div class="col col-4">Starting Level: {{ result.power_up.GL.starting_level }}</div>
         </div>
         <!-- <div class="row border">
           <div class="col">{{ result.inputs.cp }}</div>
@@ -106,7 +118,7 @@
         {% if not result.inputs.is_valid %}
           <h6>Invalid CP & IV Combo</h4>
         {% else %}
-          <div class="row border">
+          <div class="row no-gutters border">
             <div class="col">League</div>
             <div class="col">Rank</div>
             <div class="col">Best CP</div>
@@ -117,11 +129,12 @@
             <div class="col">Candy</div>
           </div>
           {% if analyze_GL %}
-          <div class="row border">
+          <div class="row no-gutters border">
             <div class="col">GL</div>
             <div class="col">{{ result.stats.GL.rank }}</div>
             <div class="col">{{ result.power_up.GL.cp_1500 }}</div>
             <div class="col">{{ result.power_up.GL.level_1500 }}</div>
+
             <div class="col">{{ result.power_up.GL.starting_cp }}</div>
             <div class="col">{{ result.power_up.GL.power_up_count }}</div>
             <div class="col">{{ result.power_up.GL.stardust_cost }}</div>
@@ -129,7 +142,7 @@
           </div>
           {% endif %}
           {% if analyze_UL %}
-          <div class="row border">
+          <div class="row no-gutters border">
             <div class="col">UL</div>
             <div class="col">{{ result.stats.UL.rank }}</div>
             <div class="col">{{ result.power_up.UL.cp_2500 }}</div>
@@ -142,7 +155,7 @@
 
           {% endif %}
           {% if analyze_ML %}
-          <div class="row border">
+          <div class="row no-gutters border">
             <div class="col">ML</div>
             <div class="col">{{ result.stats.ML.rank }}</div>
             <div class="col">{{ result.power_up.ML.cp_max }}</div>
