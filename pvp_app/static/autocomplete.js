@@ -49,15 +49,53 @@ function findMatches(event) {
         pokemonDataList.innerHTML = '';
         evoPokemonDataList.innerHTML = '';
         // create option elements, append to datalist
-        matches_array.forEach((match) => {
+        matches_array.forEach((match, index) => {
             let option = document.createElement('option');
             option.value = match;
+            console.log(index)
+            if (index == 0) {
+                // set first option to be selected by default
+                option.selected = true;
+            }
             if (event.target.id == 'pokemon') {
                 pokemonDataList.appendChild(option);
             }
             else if (event.target.id == 'evo-pokemon') {
                 evoPokemonDataList.appendChild(option);
             }
+        })
+    })
+    .catch((err) => console.log(err))
+}
+
+function getEvolutions(event) {
+    let searchString = event.target.value;
+    let matches_array = [];
+    // fetch from API endpoint 'evolutions/<str:pokemon>'
+    fetch(
+        `/evolutions/${searchString}`,
+        {
+            method: 'GET',
+            headers: {
+            Accept: "application/json",
+            "X-CSRFToken": csrftoken,
+            }
+        }
+    )
+    .then((res) => res.json())
+    .then((data) => {
+        console.log(data.results)
+        matches_array = data.results;
+        let evoPokemonDataList = document.querySelector('#auto-evo-pokemon')
+        matches_array.forEach((match, index) => {
+            let option = document.createElement('option');
+            option.value = match;
+            console.log(index)
+            if (index == 0) {
+                // set first option to be selected by default
+                option.selected = true;
+            }
+            evoPokemonDataList.appendChild(option);
         })
     })
     .catch((err) => console.log(err))
@@ -68,6 +106,8 @@ let pokemonInput = document.querySelector('#pokemon');
 let evoPokemonInput = document.querySelector('#evo-pokemon');
 // add event listener to pokemon input field
 pokemonInput.addEventListener('keyup', findMatches);
+// add event listener to completion inside pokemon input field
+pokemonInput.addEventListener('focusout', getEvolutions);
 // add event listener to evo pokemon input field
-evoPokemonInput.addEventListener('keyup', findMatches);
+// evoPokemonInput.addEventListener('keyup', findMatches);
 
