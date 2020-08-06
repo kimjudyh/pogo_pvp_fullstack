@@ -112,7 +112,6 @@
         {% if not result.inputs.is_valid %}
           <h6>Invalid CP & IV Combo</h4>
         {% else %}
-        <p>stat product: {{ result.stats.GL.stat_product }}</p>
         <table class="table table-sm table-hover table-dark">
           <thead>
             <tr>
@@ -124,6 +123,7 @@
               <th>Power Ups</th>
               <th>Stardust</th>
               <th>Candy</th>
+              <th>Stat Product</th>
             </tr>
           </thead>
           <tbody>
@@ -141,6 +141,7 @@
               <td>{{ result.power_up.GL.power_up_count }}</td>
               <td>{{ result.power_up.GL.stardust_cost }}</td>
               <td>{{ result.power_up.GL.candy_cost }}</td>
+              <td>{{ result.stats.GL.stat_product|floatformat:"0" }}</td>
             </tr>
           {% endif %}
           {% if analyze_UL %}
@@ -157,6 +158,7 @@
             <td>{{ result.power_up.UL.power_up_count }}</td>
             <td>{{ result.power_up.UL.stardust_cost }}</td>
             <td>{{ result.power_up.UL.candy_cost }}</td>
+            <td>{{ result.stats.UL.stat_product|floatformat:"0" }}</td>
           </tr>
 
           {% endif %}
@@ -174,6 +176,7 @@
             <td>{{ result.power_up.ML.power_up_count }}</td>
             <td>{{ result.power_up.ML.stardust_cost }}</td>
             <td>{{ result.power_up.ML.candy_cost }}</td>
+            <td>{{ result.stats.ML.stat_product|floatformat:"0" }}</td>
           </tr>
           {% endif %}
           </tbody>
