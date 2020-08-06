@@ -83,9 +83,11 @@ function getEvolutions(event) {
     )
     .then((res) => res.json())
     .then((data) => {
-        console.log(data.results)
+        // console.log(data.results)
         matches_array = data.results;
         let evoPokemonDataList = document.querySelector('#auto-evo-pokemon')
+        let evoPokemonInput = document.querySelector('#evo-pokemon');
+        evoPokemonDataList.innerHTML = '';
         matches_array.forEach((match, index) => {
             let option = document.createElement('option');
             option.value = match;
@@ -94,6 +96,7 @@ function getEvolutions(event) {
                 option.selected = true;
             }
             evoPokemonDataList.appendChild(option);
+            evoPokemonInput.value = '';
         })
     })
     .catch((err) => console.log(err))
