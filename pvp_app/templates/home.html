@@ -112,6 +112,7 @@
         {% if not result.inputs.is_valid %}
           <h6>Invalid CP & IV Combo</h4>
         {% else %}
+        <p>stat product: {{ result.stats.GL.stat_product }}</p>
         <table class="table table-sm table-hover table-dark">
           <thead>
             <tr>
