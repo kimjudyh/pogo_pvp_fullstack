@@ -60,4 +60,13 @@ class PokemonPVP(models.Model):
         else:
             return
 
+
+class EvolutionTable(models.Model):
+    species = models.CharField(max_length=100)
+    evolution = PickledObjectField()
+
+    def __str__(self):
+        return 'evolution table'
+
+
     
