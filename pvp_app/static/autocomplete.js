@@ -52,7 +52,6 @@ function findMatches(event) {
         matches_array.forEach((match, index) => {
             let option = document.createElement('option');
             option.value = match;
-            console.log(index)
             if (index == 0) {
                 // set first option to be selected by default
                 option.selected = true;
@@ -90,7 +89,6 @@ function getEvolutions(event) {
         matches_array.forEach((match, index) => {
             let option = document.createElement('option');
             option.value = match;
-            console.log(index)
             if (index == 0) {
                 // set first option to be selected by default
                 option.selected = true;
