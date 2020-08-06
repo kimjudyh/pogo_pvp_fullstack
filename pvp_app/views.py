@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import JsonResponse, HttpResponse
 from .LeagueStats import LeagueStats
 from .PowerUpStats import PowerUpStats
-from .models import BaseStats
+from .models import BaseStats, EvolutionTable
 
 # Create your views here.
 
@@ -93,12 +93,7 @@ def analyze(request):
                         stats_ML = evo_pokemon_pvp.get_stat_product('ML', int(attack), int(defense), int(stamina))
                         stats['ML'] = stats_ML
 
-                    # stats_array.append(stats)
-                    # print(stats_array)
-
                     power_up = pokemon_power_up.calc_evolve_cp(evo_pokemon.lower(), int(cp), int(attack), int(defense), int(stamina))
-                    # power_up_array.append(power_up)
-                    # print(power_up_array)
 
                 results.append({
                     'inputs': inputs,
@@ -132,6 +127,24 @@ def search(request, pokemon):
     # print('form matches', form_matches)
     form_matches = list(sum(form_matches, ()))
 
+    # TODO: look up evolution 
+
     results = {'results': matches + form_matches}
+
+    return JsonResponse(results)
+
+
+def get_evolutions(request, pokemon):
+    # use pokemon string to get list of its evolutions
+    matches = EvolutionTable.objects.filter(species__iexact=pokemon.lower())
+
+    if bool(matches):
+        matches = matches.first().evolution
+        print(matches)
+        results = {'results': matches}
+    else:
+        # empty query set returned
+        results = {'results': []}
+
 
     return JsonResponse(results)
