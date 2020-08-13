@@ -45,16 +45,16 @@
         <div class="IVs form-inline">
           <button type="button" class="delete btn btn-danger" tabindex="-1" >-</button>
           <label for="cp" class="sr-only">CP</label>
-          <input class="form-control form-control-sm w-20" type="number" id="cp" name="cp" value="{{ result.inputs.cp }}" placeholder="CP">
+          <input class="form-control form-control-sm w-20" type="number" id="cp" name="cp" value="{{ result.inputs.cp }}" placeholder="CP" required>
           
           <label for="attack" class="sr-only">Attack IV</label>
-          <input class="form-control form-control-sm w-15" type="number" id="attack" name="attack" value="{{ result.inputs.attack }}" placeholder="ATK">
+          <input class="form-control form-control-sm w-15" type="number" id="attack" name="attack" value="{{ result.inputs.attack }}" placeholder="ATK" required>
           
           <label for="defense" class="sr-only">Defense IV</label>
-          <input class="form-control form-control-sm w-15" type="number" id="defense" name="defense" value="{{ result.inputs.defense }}" placeholder="DEF">
+          <input class="form-control form-control-sm w-15" type="number" id="defense" name="defense" value="{{ result.inputs.defense }}" placeholder="DEF" required>
 
           <label for="stamina" class="sr-only">Stamina IV</label>
-          <input class="form-control form-control-sm w-15" type="number" id="stamina" name="stamina" value="{{ result.inputs.stamina }}" placeholder="STM">
+          <input class="form-control form-control-sm w-15" type="number" id="stamina" name="stamina" value="{{ result.inputs.stamina }}" placeholder="STM" required>
         </div>
         {% endfor %}
       {% else %}
@@ -97,7 +97,7 @@
       </div>
 
       <button type="button" class="btn btn-info" id="add">Add</button>
-      <button type="submit" class="btn btn-success analyze">Analyze</button>
+      <button type="submit" class="btn btn-success analyze" disabled>Analyze</button>
 
 
     </form>
