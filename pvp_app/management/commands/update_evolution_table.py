@@ -16,7 +16,7 @@ def copy_from_csv():
             # check if first cell is empty or contains a pokemon
             # if empty, keep previous arrays bc it is a multi-path evolution chain
             # ex. ralts, kirlia, gardevoir OR gallade
-            if row[0] != '':
+            if row[0] != '' or row[0] == 'end':
                 # write arrays to database
                 if first_evo != []:
                     EvolutionTable.objects.create(species=first_evo[0], evolution=first_evo)
@@ -28,6 +28,7 @@ def copy_from_csv():
                 first_evo = []
                 second_evo = []
                 third_evo = []
+
             print(row)
             i = 0
             for cell in row:
@@ -45,6 +46,8 @@ def copy_from_csv():
                     # first cell empty, second cell is not
                     # add second cell contents to first evo's array
                     first_evo.append(cell)
+                    # write to database
+                    EvolutionTable.objects.create(species=second_evo[0], evolution=second_evo)
                     # clear out second evo's array and append
                     second_evo = []
                     second_evo.append(cell)
@@ -62,6 +65,8 @@ def copy_from_csv():
                     # add third cell contents to first, second evo's arrays
                     first_evo.append(cell)
                     second_evo.append(cell)
+                    # write to database
+                    EvolutionTable.objects.create(species=third_evo[0], evolution=third_evo)
                     # clear out third evo's array and append
                     third_evo = []
                     third_evo.append(cell)
