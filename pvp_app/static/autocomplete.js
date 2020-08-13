@@ -44,6 +44,7 @@ function findMatches(event) {
         matches_array = data.results;
         let pokemonDataList = document.querySelector('#auto-pokemon');
         let evoPokemonDataList = document.querySelector('#auto-evo-pokemon')
+        let pokemonInput = document.querySelector('#pokemon');
         // TODO: fix flickering
         // delete old options
         pokemonDataList.innerHTML = '';
@@ -83,8 +84,8 @@ function getEvolutions(event) {
     )
     .then((res) => res.json())
     .then((data) => {
-        // console.log(data.results)
         matches_array = data.results;
+        // console.log(matches_array)
         let evoPokemonDataList = document.querySelector('#auto-evo-pokemon')
         let evoPokemonInput = document.querySelector('#evo-pokemon');
         evoPokemonDataList.innerHTML = '';
@@ -111,4 +112,23 @@ pokemonInput.addEventListener('keyup', findMatches);
 pokemonInput.addEventListener('focusout', getEvolutions);
 // add event listener to evo pokemon input field
 // evoPokemonInput.addEventListener('keyup', findMatches);
+
+// event listener to check for invalid Pokemon or evolution pokemon entries
+// pokemonInput.addEventListener('keyup', checkForInvalidInputs);
+// evoPokemonInput.addEventListener('focus', checkForInvalidInputs);
+
+// don't allow form submission if there are any invalid inputs
+function checkForInvalidInputs() {
+  let invalid_inputs = document.querySelectorAll('.invalid');
+  let analyze_button = document.querySelector('.analyze');
+  if (invalid_inputs.length > 0) {
+    analyze_button.classList.add('disabled');
+    analyze_button.setAttribute('disabled', true);
+  }
+  else {
+    analyze_button.classList.remove('disabled');
+    analyze_button.removeAttribute('disabled');
+  }
+
+}
 
