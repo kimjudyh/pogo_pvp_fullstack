@@ -40,10 +40,13 @@ Tentacool,Tentacruel,
 Geodude,Graveler,Golem
 Alolan Geodude,Alolan Graveler,Alolan Golem
 Ponyta,Rapidash,
+Galarian Ponyta,Galarian Rapidash,
 Slowpoke,Slowbro,
 ,Slowking,
+Galarian Slowpoke,Galarian Slowbro,
 Magnemite,Magneton,Magnezone
 Farfetch'd,,
+Galarian Farfetch'd,Sirfetch'd,
 Doduo,Dodrio,
 Seel,Dewgong,
 Grimer,Muk,
@@ -72,6 +75,7 @@ Horsea,Seadra,Kingdra
 Goldeen,Seaking,
 Staryu,Starmie,
 Mime Jr.,Mr. Mime,
+Galarian Mr. Mime,Mr. Rime,
 Scyther,Scizor,
 Smoochum,Jynx,
 Elekid,Electabuzz,Electivire
@@ -94,8 +98,11 @@ Kabuto,Kabutops,
 Aerodactyl,,
 Munchlax,Snorlax,
 Articuno,,
+Galarian Articuno,,
 Zapdos,,
+Galarian Zapdos,,
 Moltres,,
+Galarian Moltres,,
 Dratini,Dragonair,Dragonite
 Mewtwo,,
 Mewtwo Armored,,
@@ -136,6 +143,7 @@ Teddiursa,Ursaring,
 Slugma,Magcargo,
 Swinub,Piloswine,Mamoswine
 Corsola,,
+Galarian Corsola,Cursola,
 Remoraid,Octillery,
 Delibird,,
 Mantyke,Mantine,
@@ -157,7 +165,7 @@ Torchic,Combusken,Blaziken
 Mudkip,Marshtomp,Swampert
 Poochyena,Mightyena,
 Zigzagoon,Linoone,
-Zigzagoon,Linoone,Obstagoon
+Galarian Zigzagoon,Galarian Linoone,Obstagoon
 Wurmple,Silcoon,Beautifly
 ,Cascoon,Dustox
 Lotad,Lombre,Ludicolo
@@ -316,6 +324,7 @@ Dwebble,Crustle,
 Scraggy,Scrafty,
 Sigilyph,,
 Yamask,Cofagrigus,
+Galarian Yamask,Runerigus,
 Tirtouga,Carracosta,
 Archen,Archeops,
 Trubbish,Garbodor,
