@@ -68,16 +68,16 @@
           <!-- delete button that's disabled for first row -->
           <button type="button" class="delete btn btn-danger" tabindex="-1" disabled>-</button>
           <label for="cp" class="sr-only">CP</label>
-          <input class="form-control form-control-sm w-20" type="number" id="cp" name="cp" size="5" placeholder="CP">
+          <input class="form-control form-control-sm w-20" type="number" id="cp" name="cp" size="5" placeholder="CP" required>
 
           <label for="attack" class="sr-only">Attack IV</label>
-          <input class="form-control form-control-sm w-15" type="number" id="attack" name="attack" placeholder="ATK">
+          <input class="form-control form-control-sm w-15" type="number" id="attack" name="attack" placeholder="ATK" required>
           
           <label for="defense" class="sr-only">Defense IV</label>
-          <input class="form-control form-control-sm w-15" type="number" id="defense" name="defense" placeholder="DEF">
+          <input class="form-control form-control-sm w-15" type="number" id="defense" name="defense" placeholder="DEF" required>
 
           <label for="stamina" class="sr-only">Stamina IV</label>
-          <input class="form-control form-control-sm w-15" type="number" id="stamina" name="stamina" placeholder="STM">
+          <input class="form-control form-control-sm w-15" type="number" id="stamina" name="stamina" placeholder="STM" required>
         </div>
       {% endif %}
       </div>
@@ -103,7 +103,7 @@
       </div>
 
       <button type="button" class="btn btn-info" id="add">Add</button>
-      <button type="submit" class="btn btn-success analyze" disabled>Analyze</button>
+      <button type="submit" class="btn btn-success analyze" >Analyze</button>
 
 
     </form>
