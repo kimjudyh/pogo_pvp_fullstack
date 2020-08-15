@@ -10,7 +10,7 @@
   <p>
     Enter the CP & IVs of the Pokemon you want to analyze. 
     <br/>
-    Use the tab key or "Add" button to create a new row in the form to analyze multiple Pokemon of the same species at once.
+    Use the tab key once you've filled out the Stamina IV field or "Add" button to create a new row in the form to analyze multiple Pokemon of the same species at once.
   </p>
   <a href="#results-link">Results</a>
   <p>
@@ -20,6 +20,12 @@
   </p>
     <form method="POST" action="{% url 'analyze' %}">
       {% csrf_token %}
+
+      {% if error != undefined %}
+        <div class="invalidCombo">
+          <h5>{{ error }}</h5>
+        </div>
+      {% endif %}
 
       <div class="form-inline">
       <label for="pokemon" class="sr-only">Pokemon</label>
@@ -34,7 +40,7 @@
       
     
       <div class="IVInputsContainer ">
-      {% if pokemon %}
+      {% if results %}
         {% for result in results %}
           {% if not result.inputs.is_valid %}
           <div class="invalidCombo">
@@ -104,7 +110,7 @@
     <br/>
   <div id="results-link">
     <h3 >results</h3>
-    {% if pokemon %}
+    {% if results %}
       <h4>{{ pokemon }} -> {{ evolution }}</h4>
       {% for result in results %}
         <div class="row no-gutters">

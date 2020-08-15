@@ -15,7 +15,7 @@ def analyze(request):
     if request.method == 'GET':
         return redirect('home')
     elif request.method == 'POST':
-        # print(request.POST)
+        template = 'home.html'
 
         # deal with multiple entries
 
@@ -25,6 +25,27 @@ def analyze(request):
         # get stat product for the requested evolution pokemon
         evo_pokemon_pvp = LeagueStats(evo_pokemon.lower())
         pokemon_power_up = PowerUpStats(req_pokemon.lower())
+
+        # check for valid Pokemon input
+        species_is_valid = pokemon_power_up.verify_pokemon()
+        if not species_is_valid:
+            context = {
+                'pokemon': req_pokemon,
+                'evolution': evo_pokemon,
+                'error': f'Invalid Pokemon: {req_pokemon}'
+            }
+            return render(request, template, context)
+        
+        # check for valid evolution Pokemon input
+        evo_species_is_valid = evo_pokemon_pvp.verify_evo_pokemon()
+        if not evo_species_is_valid:
+            context = {
+                'pokemon': req_pokemon,
+                'evolution': evo_pokemon,
+                'error': f'Invalid Evolution: {evo_pokemon}'
+            }
+            return render(request, template, context)
+
         results = []
         # stats_array = []
         # power_up_array = []
@@ -103,7 +124,6 @@ def analyze(request):
 
         # print(results)
 
-        template = 'home.html'
         context = {
             'pokemon': req_pokemon,
             'evolution': evo_pokemon,
