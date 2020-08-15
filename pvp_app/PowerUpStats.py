@@ -7,9 +7,19 @@ class PowerUpStats:
     def __init__(self, pokemon):
         self.pokemon = pokemon
 
+
+    def verify_pokemon(self):
         # find base stats for pokemon (case-insensitive exact match)
-        base_stats = BaseStats.objects.get(species__iexact=self.pokemon)
+        # base_stats = BaseStats.objects.get(species__iexact=self.pokemon)
+        base_stats = BaseStats.objects.filter(species__iexact=self.pokemon)
+
         # TODO: account for misspelled pokemon
+        # no results found
+        if not base_stats:
+            return False
+        else:
+            base_stats = base_stats.first()
+
         print(base_stats.display_base_stats())
 
         self.stam_base = base_stats.hp
@@ -18,6 +28,8 @@ class PowerUpStats:
 
         self.read_cp_mult()
         self.read_power_up_costs()
+
+        return True
 
     
     # read and process cp multiplier data text file

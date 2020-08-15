@@ -13,6 +13,14 @@ class LeagueStats:
         self.IV_combo_dic = {}
 
 
+    def verify_evo_pokemon(self):
+        base_stats = BaseStats.objects.filter(species__iexact=self.pokemon)
+        if not base_stats:
+            return False
+        else:
+            return True
+
+
     # read and process cp multiplier data text file
     def read_cp_mult(self):
         '''
