@@ -26,46 +26,50 @@ let evoPokemon = { options: [] };
 function findMatches(event) {
     let searchString = event.target.value;
     let matches_array = [];
-    // fetch from API endpoint 'search/<str:pokemon>'
-    fetch(
-        `/search/${searchString}`,
-        {
-            method: 'GET',
-            headers: {
-            Accept: "application/json",
-            "X-CSRFToken": csrftoken,
+
+    // only need to search once, then the datalist will contain all relevant results and can be filtered without querying the database
+    if (searchString.length == 1) {
+        // fetch from API endpoint 'search/<str:pokemon>'
+        fetch(
+            `/search/${searchString}`,
+            {
+                method: 'GET',
+                headers: {
+                Accept: "application/json",
+                "X-CSRFToken": csrftoken,
+                }
             }
-        }
-    )
-    .then((res) => res.json())
-    .then((data) => {
-        // take JSON and convert results list into datalist options
-        // console.log(data.results);
-        matches_array = data.results;
-        let pokemonDataList = document.querySelector('#auto-pokemon');
-        let evoPokemonDataList = document.querySelector('#auto-evo-pokemon')
-        let pokemonInput = document.querySelector('#pokemon');
-        // TODO: fix flickering
-        // delete old options
-        pokemonDataList.innerHTML = '';
-        evoPokemonDataList.innerHTML = '';
-        // create option elements, append to datalist
-        matches_array.forEach((match, index) => {
-            let option = document.createElement('option');
-            option.value = match;
-            if (index == 0) {
-                // set first option to be selected by default
-                option.selected = true;
-            }
-            if (event.target.id == 'pokemon') {
-                pokemonDataList.appendChild(option);
-            }
-            else if (event.target.id == 'evo-pokemon') {
-                evoPokemonDataList.appendChild(option);
-            }
+        )
+        .then((res) => res.json())
+        .then((data) => {
+            // take JSON and convert results list into datalist options
+            // console.log(data.results);
+            matches_array = data.results;
+            let pokemonDataList = document.querySelector('#auto-pokemon');
+            let evoPokemonDataList = document.querySelector('#auto-evo-pokemon')
+            let pokemonInput = document.querySelector('#pokemon');
+
+            // delete old options
+            pokemonDataList.innerHTML = '';
+            evoPokemonDataList.innerHTML = '';
+            // create option elements, append to datalist
+            matches_array.forEach((match, index) => {
+                let option = document.createElement('option');
+                option.value = match;
+                if (index == 0) {
+                    // set first option to be selected by default
+                    option.selected = true;
+                }
+                if (event.target.id == 'pokemon') {
+                    pokemonDataList.appendChild(option);
+                }
+                else if (event.target.id == 'evo-pokemon') {
+                    evoPokemonDataList.appendChild(option);
+                }
+            })
         })
-    })
-    .catch((err) => console.log(err))
+        .catch((err) => console.log(err))
+    }
 }
 
 function getEvolutions(event) {
@@ -92,10 +96,10 @@ function getEvolutions(event) {
         matches_array.forEach((match, index) => {
             let option = document.createElement('option');
             option.value = match;
-            if (index == 0) {
-                // set first option to be selected by default
-                option.selected = true;
-            }
+            // if (index == 0) {
+            //     // set first option to be selected by default
+            //     option.selected = true;
+            // }
             evoPokemonDataList.appendChild(option);
             evoPokemonInput.value = '';
         })
