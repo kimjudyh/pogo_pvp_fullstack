@@ -111,7 +111,7 @@ function getEvolutions(event) {
 let pokemonInput = document.querySelector('#pokemon');
 let evoPokemonInput = document.querySelector('#evo-pokemon');
 // add event listener to pokemon input field
-pokemonInput.addEventListener('keypress', findMatches);
+pokemonInput.addEventListener('keydown', findMatches);
 // add event listener to completion inside pokemon input field
 pokemonInput.addEventListener('focusout', getEvolutions);
 // add event listener to evo pokemon input field
