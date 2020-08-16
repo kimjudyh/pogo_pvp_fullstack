@@ -20,15 +20,17 @@ function getCookie(name) {
 
 const csrftoken = getCookie('csrftoken');
 
-let pokemon = { options: [] };
-let evoPokemon = { options: [] };
+// let pokemon = { options: [] };
+// let evoPokemon = { options: [] };
+
 // make GET request to backend
 function findMatches(event) {
     let searchString = event.target.value;
     let matches_array = [];
 
-    // only need to search once, then the datalist will contain all relevant results and can be filtered without querying the database
-    if (searchString.length == 1) {
+    // only need to search for first few letters (take into account really fast typing of multiple letters), then the datalist will contain all relevant results and can be filtered without querying the database
+
+    if (searchString.length <= 3 && searchString.length >= 0) {
         // fetch from API endpoint 'search/<str:pokemon>'
         fetch(
             `/search/${searchString}`,
@@ -49,26 +51,26 @@ function findMatches(event) {
             let evoPokemonDataList = document.querySelector('#auto-evo-pokemon')
             let pokemonInput = document.querySelector('#pokemon');
 
-            // delete old options
-            pokemonDataList.innerHTML = '';
-            evoPokemonDataList.innerHTML = '';
-            // create option elements, append to datalist
-            matches_array.forEach((match, index) => {
-                let option = document.createElement('option');
-                option.value = match;
-                if (index == 0) {
-                    // set first option to be selected by default
-                    option.selected = true;
-                }
-                if (event.target.id == 'pokemon') {
+            if (matches_array.length == 0) {
+                pokemonDataList.innerHTML = '';
+            }
+            else if (pokemonDataList.innerHTML == '' || searchString.length == 1) {
+                // delete old options
+                pokemonDataList.innerHTML = '';
+                evoPokemonDataList.innerHTML = '';
+                // create option elements, append to datalist
+                matches_array.forEach((match, index) => {
+                    let option = document.createElement('option');
+                    option.value = match;
                     pokemonDataList.appendChild(option);
-                }
-                else if (event.target.id == 'evo-pokemon') {
-                    evoPokemonDataList.appendChild(option);
-                }
-            })
+                })
+            }
         })
-        .catch((err) => console.log(err))
+            .catch((err) => {
+                let pokemonDataList = document.querySelector('#auto-pokemon');
+                pokemonDataList.innerHTML = '';
+
+        })
     }
 }
 
@@ -96,22 +98,22 @@ function getEvolutions(event) {
         matches_array.forEach((match, index) => {
             let option = document.createElement('option');
             option.value = match;
-            // if (index == 0) {
-            //     // set first option to be selected by default
-            //     option.selected = true;
-            // }
             evoPokemonDataList.appendChild(option);
             evoPokemonInput.value = '';
         })
     })
-    .catch((err) => console.log(err))
+    .catch((err) => {
+        let evoPokemonDataList = document.querySelector('#auto-evo-pokemon')
+        evoPokemonDataList.innerHTML = '';
+
+    })
 
 }
 
 let pokemonInput = document.querySelector('#pokemon');
 let evoPokemonInput = document.querySelector('#evo-pokemon');
 // add event listener to pokemon input field
-pokemonInput.addEventListener('keydown', findMatches);
+pokemonInput.addEventListener('keyup', findMatches);
 // add event listener to completion inside pokemon input field
 pokemonInput.addEventListener('focusout', getEvolutions);
 // add event listener to evo pokemon input field

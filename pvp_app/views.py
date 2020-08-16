@@ -147,7 +147,6 @@ def search(request, pokemon):
     # print('form matches', form_matches)
     form_matches = list(sum(form_matches, ()))
 
-    # TODO: look up evolution 
 
     results = {'results': matches + form_matches}
 
@@ -166,5 +165,14 @@ def get_evolutions(request, pokemon):
         # empty query set returned
         results = {'results': []}
 
+    return JsonResponse(results)
 
+
+def empty_search(request):
+    results = {'results': []}
+    return JsonResponse(results)
+
+
+def empty_evolution(request):
+    results = {'results': []}
     return JsonResponse(results)
