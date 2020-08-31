@@ -91,9 +91,9 @@ class PowerUpStats:
 
         for level, i_cpm in self.dic_cp_mult.items():
             # calculate cp
-            calc_cp = m.floor(.1*(self.atk_base + atk_IV)*\
+            calc_cp = max(10, m.floor(.1*(self.atk_base + atk_IV)*\
                     m.sqrt(self.def_base + def_IV)*\
-                    m.sqrt(self.stam_base + stam_IV)*i_cpm**2)
+                    m.sqrt(self.stam_base + stam_IV)*i_cpm**2))
             if cp == calc_cp:
                 self.starting_cp_mult = i_cpm
                 self.starting_level = level
@@ -124,9 +124,9 @@ class PowerUpStats:
         def_base = base_stats.defense
 
         # calculate CP, rounding down
-        calc_cp = m.floor(.1*(atk_base + atk_IV)*\
+        calc_cp = max(10, m.floor(.1*(atk_base + atk_IV)*\
                 m.sqrt(def_base + def_IV)*\
-                m.sqrt(stam_base + stam_IV)*self.starting_cp_mult**2)
+                m.sqrt(stam_base + stam_IV)*self.starting_cp_mult**2))
         # calculate hp, rounding down
         calc_hp = m.floor(self.starting_cp_mult*(stam_base + stam_IV))
 

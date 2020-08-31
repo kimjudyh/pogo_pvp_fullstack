@@ -99,13 +99,13 @@ class LeagueStats:
                     A = atk_base + j_atk
                     D = def_base + k_def
 
-                    cp = m.floor(.1*A*m.sqrt(D*S)*min_cpm**2)
+                    cp = max(10, m.floor(.1*A*m.sqrt(D*S)*min_cpm**2))
                     if cp <= max_cp:
                         level = min_level
                         while cp <= max_cp and level < 40:
                             level += .5
                             cp_mult = dic_cp_mult[level]
-                            cp = m.floor(.1*A*m.sqrt(D*S)*cp_mult**2)
+                            cp = max(10, m.floor(.1*A*m.sqrt(D*S)*cp_mult**2))
                         if cp > max_cp: # we exit the previous loop when the max cp is exceeded
                             level -= .5
                         cp_mult = dic_cp_mult[level]
