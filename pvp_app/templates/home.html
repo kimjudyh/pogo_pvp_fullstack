@@ -84,18 +84,21 @@
 
       <div class="league_choices">
         <div class="form-check form-check-inline">
-        <input type="checkbox" name="GL" id="GL" value="true" class="form-check-input" checked>
+        <input type="checkbox" name="GL" id="GL" value="true" class="form-check-input" 
+        {% if analyze_GL or analyze_GL is None %} checked {% endif %}>
         <label for="GL" class="form-check-label">Great League</label>
 
         </div>
         <div class="form-check form-check-inline">
-        <input type="checkbox" name="UL" id="UL" value="true" class="form-check-input">
+        <input type="checkbox" name="UL" id="UL" value="true" class="form-check-input" 
+        {% if analyze_UL %} checked {% endif %}>
         <label for="UL" class="form-check-label">Ultra League</label>
 
         </div>
 
         <div class="form-check form-check-inline">
-        <input type="checkbox" name="ML" id="ML" value="true" class="form-check-input">
+        <input type="checkbox" name="ML" id="ML" value="true" class="form-check-input"
+        {% if analyze_ML %} checked {% endif %}>
         <label for="ML" class="form-check-label">Master League</label>
 
         </div>
@@ -139,7 +142,7 @@
           </thead>
           <tbody>
           {% if analyze_GL %}
-            {% if result.stats.GL.rank < 200 %}
+            {% if result.stats.GL.rank < 200 and result.power_up.GL.starting_cp <= 1500 %}
             <tr class="goodRank">
               {% else %}
               <tr>
@@ -156,7 +159,7 @@
             </tr>
           {% endif %}
           {% if analyze_UL %}
-            {% if result.stats.UL.rank < 200 %}
+            {% if result.stats.UL.rank < 200 and result.power_up.UL.starting_cp <= 2500  %}
             <tr class="goodRank">
               {% else %}
               <tr>
