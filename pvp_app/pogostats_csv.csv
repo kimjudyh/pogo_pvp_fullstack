@@ -695,6 +695,87 @@
 647R,Keldeo Resolute,209,260,192
 648,Meloetta Aria,225,250,225
 648P,Meloetta Pirouette,225,269,188
+650,Chespin,148,110,106
+651,Quilladin,156,146,156
+652,Chesnaught,204,201,204
+653,Fennekin,120,116,102
+654,Braixen,153,171,130
+655,Delphox,181,230,189
+656,Froakie,121,122,84
+657,Frogadier,144,168,114
+658,Greninja,176,223,152
+659,Bunnelby,116,68,72
+660,Diggersby,198,112,155
+661,Fletchling,128,95,80
+662,Fletchinder,158,145,110
+663,Talonflame,186,176,155
+664,Scatterbug,116,63,63
+665,Spewpa,128,48,89
+666,Vivillon,190,176,103
+667,Litleo,158,139,112
+668,Pyroar,200,221,149
+669,Flabébé,127,108,120
+670,Floette,144,136,151
+671,Florges,186,212,244
+672,Skiddo,165,123,102
+673,Gogoat,265,196,146
+674,Pancham,167,145,107
+675,Pangoro,216,226,146
+676,Furfrou,181,164,167
+677,Espurr,158,120,114
+678,Meowstic,179,166,167
+679,Honedge,128,135,139
+680,Doublade,153,188,206
+681S,Aegislash (Shield Forme),155,97,291
+681B,Aegislash (Blade Forme),155,291,97
+682,Spritzee,186,110,113
+683,Aromatisse,226,173,150
+684,Swirlix,158,109,119
+685,Slurpuff,193,168,163
+686,Inkay,142,98,95
+687,Malamar,200,177,165
+688,Binacle,123,96,120
+689,Barbaracle,176,194,205
+690,Skrelp,137,109,109
+691,Dragalge,163,177,207
+692,Clauncher,137,108,117
+693,Clawitzer,174,221,171
+694,Helioptile,127,115,78
+695,Heliolisk,158,219,168
+696,Tyrunt,151,158,123
+697,Tyrantrum,193,227,191
+698,Amaura,184,124,109
+699,Aurorus,265,186,163
+700,Sylveon,216,203,205
+701,Hawlucha,186,195,153
+702,Dedenne,167,164,134
+703,Carbink,137,95,285
+704,Goomy,128,101,112
+705,Sliggoo,169,159,176
+706,Goodra,207,220,242
+707,Klefki,149,160,179
+708,Phantump,125,125,103
+709,Trevenant,198,201,154
+710SU,Pumpkaboo (Small Size),127,122,124
+710A,Pumpkaboo (Average Size),135,121,123
+710L,Pumpkaboo (Large Size),144,120,122
+710SU,Pumpkaboo (Super Size),153,118,120
+711S,Gourgeist (Small Size),146,171,219
+711A,Gourgeist (Average Size),163,175,213
+711L,Gourgeist (Large Size),181,179,206
+711SU,Gourgeist (Super Size),198,182,200
+712,Bergmite,146,117,120
+713,Avalugg,216,196,240
+714,Noibat,120,83,73
+715,Noivern,198,205,175
+716,Xerneas,270,275,203
+717,Yveltal,270,275,203
+718,Zygarde,239,203,232
+719,Diancie,137,190,285
+719M,Diancie (Mega Diancie),137,342,235
+720,Hoopa (Hoopa Confined),190,287,206
+720U,Hoopa (Hoopa Unbound),190,341,210
+721,Volcanion,190,252,216
 808,Meltan,130,118,99
 809,Melmetal,264,226,190
 1000,Galarian Meowth,137,115,92
@@ -720,5 +801,13 @@
 1020,Galarian Darmanitan,233,263,114
 1021,Galarian Darmanitan Zen,233,323,123
 1022,Galarian Yamask,116,95,141
-1023,Runerigus,0,0,0
+1023,Runerigus,151,163,237
 1024,Galarian Stunfisk,240,144,171
+M1,Mega Venusaur,190,241,246
+M2,Mega Charizard X,186,273,213
+M3,Mega Charizard Y,186,319,212
+M4,Mega Blastoise,188,264,237
+M5,Mega Beedrill,163,303,148
+M6,Mega Houndoom,181,289,194
+M7,Mega Pidgeot,195,280,175
+M8,Mega Gengar,155,349,199
