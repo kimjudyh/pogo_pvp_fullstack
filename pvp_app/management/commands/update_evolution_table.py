@@ -9,6 +9,7 @@ def copy_from_csv():
     first_evo = []
     second_evo = []
     third_evo = []
+    fourth_evo = []
 
     with open(os.path.join(BASE_DIR, "pvp_app/pokemon_evolutions.csv"), newline='', encoding='utf-8-sig') as evo_file:
         read_file = csv.reader(evo_file)
@@ -17,17 +18,21 @@ def copy_from_csv():
             # if empty, keep previous arrays bc it is a multi-path evolution chain
             # ex. ralts, kirlia, gardevoir OR gallade
             if row[0] != '' or row[0] == 'end':
-                # write arrays to database
+                # write arrays to database for each new pokemon and at end of file
                 if first_evo != []:
                     EvolutionTable.objects.create(species=first_evo[0], evolution=first_evo)
                 if second_evo != []:
                     EvolutionTable.objects.create(species=second_evo[0], evolution=second_evo)
                 if third_evo != []:
                     EvolutionTable.objects.create(species=third_evo[0], evolution=third_evo)
+                if fourth_evo != []:
+                    EvolutionTable.objects.create(species=fourth_evo[0],
+                    evolution=fourth_evo)
                 # create empty array
                 first_evo = []
                 second_evo = []
                 third_evo = []
+                fourth_evo = []
 
             print(row)
             i = 0
@@ -46,7 +51,7 @@ def copy_from_csv():
                     # first cell empty, second cell is not
                     # add second cell contents to first evo's array
                     first_evo.append(cell)
-                    # write to database
+                    # write previous contents to database
                     EvolutionTable.objects.create(species=second_evo[0], evolution=second_evo)
                     # clear out second evo's array and append
                     second_evo = []
@@ -65,11 +70,18 @@ def copy_from_csv():
                     # add third cell contents to first, second evo's arrays
                     first_evo.append(cell)
                     second_evo.append(cell)
-                    # write to database
+                    # write previous contents to database
                     EvolutionTable.objects.create(species=third_evo[0], evolution=third_evo)
                     # clear out third evo's array and append
                     third_evo = []
                     third_evo.append(cell)
+                elif i == 3 and cell != '':
+                    # fourth evo exists (probably a mega evo)
+                    first_evo.append(cell)
+                    second_evo.append(cell)
+                    third_evo.append(cell)
+                    fourth_evo = []
+                    fourth_evo.append(cell)
 
                 i += 1
             # at the end of the row, write arrays to database
@@ -80,6 +92,8 @@ def copy_from_csv():
                 print('second evo', second_evo)
             if third_evo != []:
                 print('third evo', third_evo)
+            if fourth_evo != []:
+                print('fourth evo', fourth_evo)
 
 
 def delete_old_entries():
