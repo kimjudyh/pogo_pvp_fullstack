@@ -8,9 +8,10 @@
   {% endif %}
   <h2 id="welcome-link">Pokemon PVP Rank & Power Up Analysis</h2>
   <p>
+    Enter a max level between 40 and 51. If left blank it will default to 40. <br/>
     Enter the CP & IVs of the Pokemon you want to analyze. 
     <br/>
-    Use the tab key once you've filled out the Stamina IV field or "Add" button to create a new row in the form to analyze multiple Pokemon of the same species at once.
+    Use the tab key once you've filled out the Stamina IV field or "Add" button to create a new row in the form to analyze multiple Pokemon of the same species at once. Press Enter or "Analyze" when done.
   </p>
   <a href="#results-link">Results</a>
   <p>
@@ -37,8 +38,20 @@
       <datalist id="auto-evo-pokemon"></datalist>
 
       <label for="max-level" class="sr-only">Max Level</label>
-      <input class="form-control form-control-sm w-15" type="number" id="max_level" name="max_level" value="{{ max_level }}" placeholder="Max Level" required>
-
+      <input class="form-control form-control-sm "  list="max-level-choices" type="number" id="max-level" name="max_level" value="{{ max_level }}" placeholder="Max Level" required>
+      <datalist>
+        <option value="40">40</option>
+        <option value="41">41</option>
+        <option value="42">42</option>
+        <option value="43">43</option>
+        <option value="44">44</option>
+        <option value="45">45</option>
+        <option value="46">46</option>
+        <option value="47">47</option>
+        <option value="48">48</option>
+        <option value="49">49</option>
+        <option value="50">50</option>
+      </datalist>
       </div>
       
     
@@ -140,6 +153,7 @@
               <th>Power Ups</th>
               <th>Stardust</th>
               <th>Candy</th>
+              <th>XL Candy</th>
               <th>Stat Product</th>
             </tr>
           </thead>
@@ -158,6 +172,7 @@
               <td>{{ result.power_up.GL.power_up_count }}</td>
               <td>{{ result.power_up.GL.stardust_cost }}</td>
               <td>{{ result.power_up.GL.candy_cost }}</td>
+              <td>{{ result.power_up.GL.xlcandy_cost }}</td>
               <td>{{ result.stats.GL.stat_product|floatformat:"0" }}</td>
             </tr>
           {% endif %}
@@ -175,6 +190,7 @@
             <td>{{ result.power_up.UL.power_up_count }}</td>
             <td>{{ result.power_up.UL.stardust_cost }}</td>
             <td>{{ result.power_up.UL.candy_cost }}</td>
+            <td>{{ result.power_up.UL.xlcandy_cost }}</td>
             <td>{{ result.stats.UL.stat_product|floatformat:"0" }}</td>
           </tr>
 
@@ -193,6 +209,7 @@
             <td>{{ result.power_up.ML.power_up_count }}</td>
             <td>{{ result.power_up.ML.stardust_cost }}</td>
             <td>{{ result.power_up.ML.candy_cost }}</td>
+            <td>{{ result.power_up.ML.xlcandy_cost }}</td>
             <td>{{ result.stats.ML.stat_product|floatformat:"0" }}</td>
           </tr>
           {% endif %}

@@ -167,10 +167,12 @@ class LeagueStats:
 
     def get_stat_product(self, league, attack, defense, stamina, max_level):
         # get table from database for this pokemon, or create it if it doesn't exist
+        '''
         PVP_table, created = PokemonPVP.objects.get_or_create(species__iexact=self.pokemon.lower(), 
         defaults=
         { 'species': self.pokemon.lower(), 'GL_dic': {}, 'UL_dic': {}, 'ML_dic': {}
         })
+        '''
 
         # check if database has calculated dictionary of stat products
         #if created or not PVP_table.stats_have_been_calculated(league):

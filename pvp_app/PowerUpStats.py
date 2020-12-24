@@ -189,6 +189,7 @@ class PowerUpStats:
         level_2500 = level_1500
         stardust_2500 = stardust_cost
         candy_2500 = candy_cost
+        xlcandy_2500 = xlcandy_cost
         power_up_2500 = power_up_count
 
         if level_2500 == max_lvl and cp_2500 <= 2500:
@@ -226,6 +227,7 @@ class PowerUpStats:
         level_max = level_2500
         stardust_max = stardust_2500
         candy_max = candy_2500
+        xlcandy_max = xlcandy_2500
         power_up_max = power_up_2500
 
         if level_max == max_lvl:

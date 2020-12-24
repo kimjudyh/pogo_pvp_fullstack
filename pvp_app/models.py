@@ -39,7 +39,7 @@ class PokemonPVP(models.Model):
     species = models.CharField(max_length=100)
     # League_dic definition
     # { IV combo as a string: { rank: int, stat_product: float } }
-    # { '000': { 'rank': 123, 'stat_product': 123.33 }}
+    # { '0,0,0': { 'rank': 123, 'stat_product': 123.33 }}
     GL_dic = PickledObjectField()
     UL_dic = PickledObjectField()
     ML_dic = PickledObjectField()

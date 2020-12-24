@@ -115,7 +115,7 @@ def analyze(request):
                         stats_ML = evo_pokemon_pvp.get_stat_product('ML', int(attack), int(defense), int(stamina), float(max_level))
                         stats['ML'] = stats_ML
 
-                    power_up = pokemon_power_up.calc_evolve_cp(evo_pokemon.lower(), int(cp), int(attack), int(defense), int(stamina), max_level)
+                    power_up = pokemon_power_up.calc_evolve_cp(evo_pokemon.lower(), int(cp), int(attack), int(defense), int(stamina), float(max_level))
 
                 results.append({
                     'inputs': inputs,
@@ -123,7 +123,7 @@ def analyze(request):
                     'power_up': power_up
                 })
 
-        # print(results)
+        print(results)
 
         context = {
             'pokemon': req_pokemon,
