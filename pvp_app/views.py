@@ -21,6 +21,7 @@ def analyze(request):
 
         req_pokemon = request.POST['pokemon']
         evo_pokemon = request.POST['evo-pokemon']
+        max_level   = request.POST['max_level']
 
         # get stat product for the requested evolution pokemon
         evo_pokemon_pvp = LeagueStats(evo_pokemon.lower())
@@ -105,16 +106,16 @@ def analyze(request):
                     # proceed
 
                     if analyze_GL:
-                        stats_GL = evo_pokemon_pvp.get_stat_product('GL', int(attack), int(defense), int(stamina))
+                        stats_GL = evo_pokemon_pvp.get_stat_product('GL', int(attack), int(defense), int(stamina), float(max_level))
                         stats['GL'] = stats_GL
                     if analyze_UL:
-                        stats_UL = evo_pokemon_pvp.get_stat_product('UL', int(attack), int(defense), int(stamina))
+                        stats_UL = evo_pokemon_pvp.get_stat_product('UL', int(attack), int(defense), int(stamina), float(max_level))
                         stats['UL'] = stats_UL
                     if analyze_ML:
-                        stats_ML = evo_pokemon_pvp.get_stat_product('ML', int(attack), int(defense), int(stamina))
+                        stats_ML = evo_pokemon_pvp.get_stat_product('ML', int(attack), int(defense), int(stamina), float(max_level))
                         stats['ML'] = stats_ML
 
-                    power_up = pokemon_power_up.calc_evolve_cp(evo_pokemon.lower(), int(cp), int(attack), int(defense), int(stamina))
+                    power_up = pokemon_power_up.calc_evolve_cp(evo_pokemon.lower(), int(cp), int(attack), int(defense), int(stamina), max_level)
 
                 results.append({
                     'inputs': inputs,
@@ -127,6 +128,7 @@ def analyze(request):
         context = {
             'pokemon': req_pokemon,
             'evolution': evo_pokemon,
+            'max_level': max_level,
             'analyze_GL': analyze_GL,
             'analyze_UL': analyze_UL,
             'analyze_ML': analyze_ML,

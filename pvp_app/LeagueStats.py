@@ -48,7 +48,7 @@ class LeagueStats:
         return dic_cp_mult
 
 
-    def calculate_4096_stat_products(self, league):
+    def calculate_4096_stat_products(self, league, max_level):
         # get table from database for this pokemon, or create it if it doesn't exist
         PVP_table, created = PokemonPVP.objects.get_or_create(species__iexact=self.pokemon.lower(), 
         defaults=
@@ -102,7 +102,7 @@ class LeagueStats:
                     cp = max(10, m.floor(.1*A*m.sqrt(D*S)*min_cpm**2))
                     if cp <= max_cp:
                         level = min_level
-                        while cp <= max_cp and level < 40:
+                        while cp <= max_cp and level < max_level:
                             level += .5
                             cp_mult = dic_cp_mult[level]
                             cp = max(10, m.floor(.1*A*m.sqrt(D*S)*cp_mult**2))
@@ -165,7 +165,7 @@ class LeagueStats:
 
         return 
 
-    def get_stat_product(self, league, attack, defense, stamina):
+    def get_stat_product(self, league, attack, defense, stamina, max_level):
         # get table from database for this pokemon, or create it if it doesn't exist
         PVP_table, created = PokemonPVP.objects.get_or_create(species__iexact=self.pokemon.lower(), 
         defaults=
@@ -173,10 +173,10 @@ class LeagueStats:
         })
 
         # check if database has calculated dictionary of stat products
-        if created or not PVP_table.stats_have_been_calculated(league):
-            self.calculate_4096_stat_products(league)
-            # refetch from database
-            PVP_table = PokemonPVP.objects.get(species__iexact=self.pokemon.lower())
+        #if created or not PVP_table.stats_have_been_calculated(league):
+        self.calculate_4096_stat_products(league, max_level)
+        # refetch from database
+        PVP_table = PokemonPVP.objects.get(species__iexact=self.pokemon.lower())
 
         IV_combo = str(attack) + ',' + str(defense) + ',' + str(stamina)
         

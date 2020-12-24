@@ -66,7 +66,8 @@ class PowerUpStats:
         returns dictionary with key: level (int), value: dictionary with keys:
         'stardust': int
         'candy': int
-        ex. {10.5: {'stardust': 1000, 'candy': 1}}
+        'xlcandy': int
+        ex. {10.5: {'stardust': 1000, 'candy': 1, 'xlcandy': 0}}
         '''
         import csv
 
@@ -80,7 +81,7 @@ class PowerUpStats:
                 if count == 0:
                     count += 1
                     continue
-                dic_power_up[float(row[0])] = {'stardust': int(row[1]), 'candy': int(row[2])}
+                dic_power_up[float(row[0])] = {'stardust': int(row[1]), 'candy': int(row[2]), 'xlcandy': int(row[3])}
 
         self.dic_power_up = dic_power_up
 
@@ -102,7 +103,7 @@ class PowerUpStats:
         print('error: wrong IVs')
         return False
 
-    def calc_evolve_cp(self, evo_pokemon, cp, atk_IV, def_IV, stam_IV):
+    def calc_evolve_cp(self, evo_pokemon, cp, atk_IV, def_IV, stam_IV, max_lvl):
         '''
         :param evo_pokemon: string of evolution pokemon
         '''
@@ -112,6 +113,7 @@ class PowerUpStats:
         # initialize vars for stardust and candy cost
         stardust_cost = 0
         candy_cost = 0
+        xlcandy_cost = 0
 
         # initialize var for number of power ups
         power_up_count = 0
@@ -140,10 +142,11 @@ class PowerUpStats:
 
         # check if calc_cp is already over 1500
         if cp_1500 <= 1500:
-            while cp_1500 <= 1500 and level_1500 < 40.0:
+            while cp_1500 <= 1500 and level_1500 < max_lvl:
                 # use level to get how much stardust, candy to power up
                 stardust_cost += self.dic_power_up[level_1500]['stardust']
                 candy_cost += self.dic_power_up[level_1500]['candy']
+                xlcandy_cost += self.dic_power_up[level_1500]['xlcandy']
 
                 # add to power up count, add 0.5 level
                 power_up_count += 1
@@ -162,13 +165,14 @@ class PowerUpStats:
                 hp_1500 = m.floor(cp_mult_1500*(stam_base + stam_IV))
             # since while loop will give cp over 1500, need to get the level below
             # and recalculate cp and hp
-            if level_1500 == 40.0:
+            if level_1500 == max_lvl and cp_1500 <= 1500:
                 pass
             else:
                 power_up_count -= 1
                 level_1500 -= 0.5
                 stardust_cost -= self.dic_power_up[level_1500]['stardust']
                 candy_cost -= self.dic_power_up[level_1500]['candy']
+                xlcandy_cost -= self.dic_power_up[level_1500]['xlcandy']
 
             cp_mult_1500 = self.dic_cp_mult[level_1500]
             # calculate CP, rounding down
@@ -187,25 +191,27 @@ class PowerUpStats:
         candy_2500 = candy_cost
         power_up_2500 = power_up_count
 
-        if level_2500 == 40.0:
+        if level_2500 == max_lvl and cp_2500 <= 2500:
             pass
         elif cp_2500 <= 2500:
-            while cp_2500 <= 2500 and level_2500 < 40.0:
+            while cp_2500 <= 2500 and level_2500 < max_lvl:
                 stardust_2500 += self.dic_power_up[level_2500]['stardust']
                 candy_2500 += self.dic_power_up[level_2500]['candy']
+                xlcandy_2500 += self.dic_power_up[level_2500]['xlcandy']
                 power_up_2500 += 1
                 level_2500 += 0.5
                 cp_mult_2500 = self.dic_cp_mult[level_2500]
                 cp_2500 = m.floor(.1*(atk_base + atk_IV)*\
                         m.sqrt(def_base + def_IV)*\
                         m.sqrt(stam_base + stam_IV)*cp_mult_2500**2)
-            if level_2500 == 40.0:
+            if level_2500 == max_lvl and cp_2500 <= 2500:
                 pass
             else:
                 power_up_2500 -= 1
                 level_2500 -= 0.5
                 stardust_2500 -= self.dic_power_up[level_2500]['stardust']
                 candy_2500 -= self.dic_power_up[level_2500]['candy']
+                xlcandy_2500 -= self.dic_power_up[level_2500]['xlcandy']
 
             # calculate final values
             cp_mult_2500 = self.dic_cp_mult[level_2500]
@@ -222,17 +228,18 @@ class PowerUpStats:
         candy_max = candy_2500
         power_up_max = power_up_2500
 
-        if level_max == 40.0:
+        if level_max == max_lvl:
             pass
         else:
-            # calculate CP at level 40
-            cp_mult_max = self.dic_cp_mult[40.0]
+            # calculate CP at max_lvl
+            cp_mult_max = self.dic_cp_mult[max_lvl]
             cp_max = m.floor(.1*(atk_base + atk_IV)*\
                         m.sqrt(def_base + def_IV)*\
                         m.sqrt(stam_base + stam_IV)*cp_mult_max**2)
-            while level_max < 40.0:
+            while level_max < max_lvl:
                 stardust_max += self.dic_power_up[level_max]['stardust']
                 candy_max += self.dic_power_up[level_max]['candy']
+                xlcandy_max += self.dic_power_up[level_max]['xlcandy']
                 power_up_max += 1
                 level_max += 0.5
 
@@ -244,14 +251,16 @@ class PowerUpStats:
             'power_up_count': power_up_count, 
             'cp_1500': cp_1500, 
             'stardust_cost': stardust_cost, 
-            'candy_cost': candy_cost, 
+            'candy_cost': candy_cost,
+            'xlcandy_cost': xlcandy_cost, 
             'level_1500': level_1500
             }
         power_up_dic['UL'] = {
             'cp_2500': cp_2500, 
             'power_up_count': power_up_2500, 
             'stardust_cost': stardust_2500, 
-            'candy_cost': candy_2500, 
+            'candy_cost': candy_2500,
+            'xlcandy_cost': xlcandy_2500, 
             'level_2500': level_2500
             }
         power_up_dic['ML'] = {
@@ -259,6 +268,7 @@ class PowerUpStats:
             'power_up_count': power_up_max, 
             'stardust_cost': stardust_max, 
             'candy_cost': candy_max,
+            'xlcandy_cost': xlcandy_max,
             'level_max': level_max
             }
 
