@@ -46,6 +46,15 @@ def analyze(request):
                 'error': f'Invalid Evolution: {evo_pokemon}'
             }
             return render(request, template, context)
+        
+        # check for valid max level input (40 <= max_level <= 51)
+        if float(max_level) < 40 or float(max_level) > 51:
+            context = {
+                'pokemon': req_pokemon,
+                'evolution': evo_pokemon,
+                'error': f'Invalid Max Level: {max_level}'
+            }
+            return render(request, template, context)
 
         results = []
         # stats_array = []
