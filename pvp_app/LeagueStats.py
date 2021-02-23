@@ -150,11 +150,13 @@ class LeagueStats:
 
         # write to database
         if league == "GL":
-            PVP_table.GL_dic = self.league_dic
+            PVP_table.GL_dic[max_level] = self.league_dic
         elif league == "UL":
-            PVP_table.UL_dic = self.league_dic
+            PVP_table.UL_dic[max_level] = self.league_dic
         elif league == "ML":
-            PVP_table.ML_dic = self.league_dic
+            PVP_table.ML_dic[max_level] = self.league_dic
+
+
 
         PVP_table.save()
 
@@ -167,30 +169,32 @@ class LeagueStats:
 
     def get_stat_product(self, league, attack, defense, stamina, max_level):
         # get table from database for this pokemon, or create it if it doesn't exist
-        '''
         PVP_table, created = PokemonPVP.objects.get_or_create(species__iexact=self.pokemon.lower(), 
-        defaults=
-        { 'species': self.pokemon.lower(), 'GL_dic': {}, 'UL_dic': {}, 'ML_dic': {}
-        })
-        '''
+            defaults=
+            { 'species': self.pokemon.lower(), 'GL_dic': {}, 'UL_dic': {}, 'ML_dic': {}
+            }
+        )
 
         # check if database has calculated dictionary of stat products
-        #if created or not PVP_table.stats_have_been_calculated(league):
-        self.calculate_4096_stat_products(league, max_level)
+        # check if specific max level has been calculated
+        if created or not PVP_table.stats_have_been_calculated(league) or not PVP_table.level_has_been_calculated(league, max_level):
+            print('level not in table, possibly')
+            self.calculate_4096_stat_products(league, max_level)
         # refetch from database
         PVP_table = PokemonPVP.objects.get(species__iexact=self.pokemon.lower())
 
         IV_combo = str(attack) + ',' + str(defense) + ',' + str(stamina)
         
         if league == 'GL':
-            # print(PVP_table.GL_dic[IV_combo])
-            return PVP_table.GL_dic[IV_combo]
+            print('LeagueStats level', max_level)
+            print('LeagueStats GL', PVP_table.GL_dic[max_level][IV_combo])
+            return PVP_table.GL_dic[max_level][IV_combo]
         elif league == 'UL':
-            # print(PVP_table.UL_dic[IV_combo])
-            return PVP_table.UL_dic[IV_combo]
+            print('LeagueStats UL', PVP_table.UL_dic[max_level][IV_combo])
+            return PVP_table.UL_dic[max_level][IV_combo]
         elif league == 'ML':
-            # print(PVP_table.ML_dic[IV_combo])
-            return PVP_table.ML_dic[IV_combo]
+            print('LeagueStats ML', PVP_table.ML_dic[max_level][IV_combo])
+            return PVP_table.ML_dic[max_level][IV_combo]
         
 
 

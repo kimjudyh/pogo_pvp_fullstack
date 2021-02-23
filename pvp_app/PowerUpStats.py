@@ -13,7 +13,6 @@ class PowerUpStats:
         # base_stats = BaseStats.objects.get(species__iexact=self.pokemon)
         base_stats = BaseStats.objects.filter(species__iexact=self.pokemon)
 
-        # TODO: account for misspelled pokemon
         # no results found
         if not base_stats:
             return False

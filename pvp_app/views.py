@@ -123,7 +123,7 @@ def analyze(request):
                     'power_up': power_up
                 })
 
-        print(results)
+        # print(results)
 
         context = {
             'pokemon': req_pokemon,
