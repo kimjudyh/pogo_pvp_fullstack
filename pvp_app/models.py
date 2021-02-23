@@ -39,7 +39,10 @@ class PokemonPVP(models.Model):
     species = models.CharField(max_length=100)
     # League_dic definition
     # { IV combo as a string: { rank: int, stat_product: float } }
-    # { '000': { 'rank': 123, 'stat_product': 123.33 }}
+    # old:
+    # { '0,0,0': { 'rank': 123, 'stat_product': 123.33 }}
+    # new with >40 levels:
+    # {50: {'0,0,0': {'rank': 30, 'stat_product': 333}}, 51: {'0,0,0': {etc}}}
     GL_dic = PickledObjectField()
     UL_dic = PickledObjectField()
     ML_dic = PickledObjectField()
@@ -59,6 +62,24 @@ class PokemonPVP(models.Model):
             return bool(self.ML_dic)
         else:
             return
+
+    def level_has_been_calculated(self, league, level):
+        # return true if level has been calculated
+        if league == 'GL':
+            if level in self.GL_dic:
+                return True
+            else:
+                return False
+        elif league == 'UL':
+            if level in self.UL_dic:
+                return True
+            else:
+                return False
+        elif league == 'ML':
+            if level in self.ML_dic:
+                return True
+            else:
+                return False
 
 
 class EvolutionTable(models.Model):

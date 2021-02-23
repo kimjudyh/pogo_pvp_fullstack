@@ -10,6 +10,20 @@ body.addEventListener('click', (event) => {
   }
 })
 
+const max_level_input = document.querySelector('#max-level');
+max_level_input.addEventListener('focusout', (event) => {
+  // validate max level input
+  if (event.target.value === "") {
+    event.target.value = 40
+  }
+  else if (event.target.value > 51 || event.target.value < 40) {
+    event.target.classList.add('invalid');
+  }
+  if (event.target.value <= 51 && event.target.value >= 40) {
+    event.target.classList.remove('invalid');
+  }
+  checkForInvalidInputs();
+})
 
 // function to copy input html markup and reset values, styling
 function copyRows(event) {
