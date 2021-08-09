@@ -24,8 +24,20 @@ def analyze(request):
         max_level   = request.POST['max_level']
 
         # get stat product for the requested evolution pokemon
-        evo_pokemon_pvp = LeagueStats(evo_pokemon.lower())
         pokemon_power_up = PowerUpStats(req_pokemon.lower())
+        matches = [evo_pokemon.lower()]
+        if evo_pokemon.lower() == "all":
+            found_match = EvolutionTable.objects.filter(species__iexact=pokemon.lower())
+            if bool(found_match):
+                matches = matches.first().evolution
+            else:
+                matches = []
+
+            target_evolutions = []
+            for evo in matches:
+                target_evolutions.append(LeagueStats(evo_pokemon.lower()))
+        else:
+            target_evolutions = [LeagueStats(evo_pokemon.lower())]
 
         # check for valid Pokemon input
         species_is_valid = pokemon_power_up.verify_pokemon()
@@ -38,7 +50,9 @@ def analyze(request):
             return render(request, template, context)
         
         # check for valid evolution Pokemon input
-        evo_species_is_valid = evo_pokemon_pvp.verify_evo_pokemon()
+        evo_species_is_valid = True
+        for evo_pokemon_pvp in target_evolutions:
+            evo_species_is_valid &= evo_pokemon_pvp.verify_evo_pokemon()
         if not evo_species_is_valid:
             context = {
                 'pokemon': req_pokemon,
@@ -115,14 +129,17 @@ def analyze(request):
                     # proceed
 
                     if analyze_GL:
-                        stats_GL = evo_pokemon_pvp.get_stat_product('GL', int(attack), int(defense), int(stamina), float(max_level))
-                        stats['GL'] = stats_GL
+                        for evo_pokemon_pvp in target_evolutions:
+                            stats_GL = evo_pokemon_pvp.get_stat_product('GL', int(attack), int(defense), int(stamina), float(max_level))
+                            stats['GL'][evo_pokemon_pvp.pokemon] = stats_GL
                     if analyze_UL:
-                        stats_UL = evo_pokemon_pvp.get_stat_product('UL', int(attack), int(defense), int(stamina), float(max_level))
-                        stats['UL'] = stats_UL
+                        for evo_pokemon_pvp in target_evolutions:
+                            stats_UL = evo_pokemon_pvp.get_stat_product('UL', int(attack), int(defense), int(stamina), float(max_level))
+                            stats['UL'][evo_pokemon_pvp.pokemon] = stats_UL
                     if analyze_ML:
-                        stats_ML = evo_pokemon_pvp.get_stat_product('ML', int(attack), int(defense), int(stamina), float(max_level))
-                        stats['ML'] = stats_ML
+                        for evo_pokemon_pvp in target_evolutions:
+                            stats_ML = evo_pokemon_pvp.get_stat_product('ML', int(attack), int(defense), int(stamina), float(max_level))
+                            stats['ML'][evo_pokemon_pvp.pokemon] = stats_ML
 
                     power_up = pokemon_power_up.calc_evolve_cp(evo_pokemon.lower(), int(cp), int(attack), int(defense), int(stamina), float(max_level))
 
@@ -137,6 +154,7 @@ def analyze(request):
         context = {
             'pokemon': req_pokemon,
             'evolution': evo_pokemon,
+            'evolution_names': matches,
             'max_level': max_level,
             'analyze_GL': analyze_GL,
             'analyze_UL': analyze_UL,
