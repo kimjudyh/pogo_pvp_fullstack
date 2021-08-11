@@ -9,6 +9,7 @@
   <h2 id="welcome-link">Pokemon PVP Rank & Power Up Analysis</h2>
   <p>
     Enter a max level between 40 and 51. If left blank it will default to 40. <br/>
+    Enter "all" into the Evolution Pokemon input to analyze all evolutions. <br/>
     Enter the CP & IVs of the Pokemon you want to analyze. 
     <br/>
     Use the tab key once you've filled out the Stamina IV field or "Add" button to create a new row in the form to analyze multiple Pokemon of the same species at once. Press Enter or "Analyze" when done.
@@ -30,7 +31,7 @@
 
       <div class="form-inline">
       <label for="pokemon" class="sr-only">Pokemon</label>
-      <input type="text" list="auto-pokemon" id="pokemon" name="pokemon" autofocus required value="{{ pokemon }}" placeholder="Pokemon" class="form-control form-control-sm">
+      <input type="text" list="auto-pokemon" id="pokemon" name="pokemon" required value="{{ pokemon }}" placeholder="Pokemon" class="form-control form-control-sm">
       <datalist id="auto-pokemon"></datalist>
 
       <label for="evo-pokemon" class="sr-only">Evolution</label>
@@ -137,7 +138,7 @@
           <div class="col col-2">A: {{ result.inputs.attack }}</div>
           <div class="col col-2">D: {{ result.inputs.defense }}</div>
           <div class="col col-2">S: {{ result.inputs.stamina}}</div>
-          <div class="col col-4">Starting Level: {{ result.power_up.GL.starting_level }}</div>
+          <div class="col col-4">Starting Level: {{ result.inputs.starting_level }}</div>
         </div>
         {% if not result.inputs.is_valid %}
           <h6>Invalid CP & IV Combo</h4>
@@ -146,6 +147,9 @@
           <thead>
             <tr>
               <th>League</th>
+              {% if evolution_names|length > 1 %}
+              <th>Evolution</th>
+              {% endif %}
               <th>Rank</th>
               <th>Best CP</th>
               <th>Best Level</th>
@@ -159,59 +163,75 @@
           </thead>
           <tbody>
           {% if analyze_GL %}
-            {% if result.stats.GL.rank < 200 and result.power_up.GL.starting_cp <= 1500 %}
+            {% for output in result.outputs %}
+            {% if output.stats.GL.rank < 200 and output.power_up.GL.starting_cp <= 1500 %}
             <tr class="goodRank">
               {% else %}
               <tr>
             {% endif %}
               <td>GL</td>
-              <td>{{ result.stats.GL.rank }}</td>
-              <td>{{ result.power_up.GL.cp_1500 }}</td>
-              <td>{{ result.power_up.GL.level_1500 }}</td>
-              <td>{{ result.power_up.GL.starting_cp }}</td>
-              <td>{{ result.power_up.GL.power_up_count }}</td>
-              <td>{{ result.power_up.GL.stardust_cost }}</td>
-              <td>{{ result.power_up.GL.candy_cost }}</td>
-              <td>{{ result.power_up.GL.xlcandy_cost }}</td>
-              <td>{{ result.stats.GL.stat_product|floatformat:"0" }}</td>
+              {% if evolution_names|length > 1 %}
+              <td>{{output.evo|title }}</td>
+              {% endif %}
+              <td>{{ output.stats.GL.rank }}</td>
+              <td>{{ output.power_up.GL.cp_1500 }}</td>
+              <td>{{ output.power_up.GL.level_1500 }}</td>
+              <td>{{ output.power_up.GL.starting_cp }}</td>
+              <td>{{ output.power_up.GL.power_up_count }}</td>
+              <td>{{ output.power_up.GL.stardust_cost }}</td>
+              <td>{{ output.power_up.GL.candy_cost }}</td>
+              <td>{{ output.power_up.GL.xlcandy_cost }}</td>
+              <td>{{ output.stats.GL.stat_product|floatformat:"0" }}</td>
             </tr>
+          {% endfor %}    
           {% endif %}
+
           {% if analyze_UL %}
-            {% if result.stats.UL.rank < 200 and result.power_up.GL.starting_cp <= 2500  %}
+            {% for output in result.outputs %}
+            {% if output.stats.UL.rank < 200 and output.power_up.GL.starting_cp <= 2500  %}
             <tr class="goodRank">
               {% else %}
               <tr>
             {% endif %}
             <td>UL</div>
-            <td>{{ result.stats.UL.rank }}</td>
-            <td>{{ result.power_up.UL.cp_2500 }}</td>
-            <td>{{ result.power_up.UL.level_2500 }}</td>
-            <td>{{ result.power_up.GL.starting_cp }}</td>
-            <td>{{ result.power_up.UL.power_up_count }}</td>
-            <td>{{ result.power_up.UL.stardust_cost }}</td>
-            <td>{{ result.power_up.UL.candy_cost }}</td>
-            <td>{{ result.power_up.UL.xlcandy_cost }}</td>
-            <td>{{ result.stats.UL.stat_product|floatformat:"0" }}</td>
+            {% if evolution_names|length > 1 %}
+              <td>{{output.evo|title }}</td>
+            {% endif %}
+            <td>{{ output.stats.UL.rank }}</td>
+            <td>{{ output.power_up.UL.cp_2500 }}</td>
+            <td>{{ output.power_up.UL.level_2500 }}</td>
+            <td>{{ output.power_up.GL.starting_cp }}</td>
+            <td>{{ output.power_up.UL.power_up_count }}</td>
+            <td>{{ output.power_up.UL.stardust_cost }}</td>
+            <td>{{ output.power_up.UL.candy_cost }}</td>
+            <td>{{ output.power_up.UL.xlcandy_cost }}</td>
+            <td>{{ output.stats.UL.stat_product|floatformat:"0" }}</td>
           </tr>
-
+          {% endfor %}    
           {% endif %}
+
           {% if analyze_ML %}
-            {% if result.stats.ML.rank < 200 %}
+            {% for output in result.outputs %}
+            {% if output.stats.ML.rank < 200 %}
             <tr class="goodRank">
               {% else %}
               <tr>
             {% endif %}
             <td>ML</div>
-            <td>{{ result.stats.ML.rank }}</td>
-            <td>{{ result.power_up.ML.cp_max }}</td>
-            <td>{{ result.power_up.ML.level_max }}</td>
-            <td>{{ result.power_up.GL.starting_cp }}</td>
-            <td>{{ result.power_up.ML.power_up_count }}</td>
-            <td>{{ result.power_up.ML.stardust_cost }}</td>
-            <td>{{ result.power_up.ML.candy_cost }}</td>
-            <td>{{ result.power_up.ML.xlcandy_cost }}</td>
-            <td>{{ result.stats.ML.stat_product|floatformat:"0" }}</td>
+            {% if evolution_names|length > 1 %}
+              <td>{{output.evo|title }}</td>
+            {% endif %}
+            <td>{{ output.stats.ML.rank }}</td>
+            <td>{{ output.power_up.ML.cp_max }}</td>
+            <td>{{ output.power_up.ML.level_max }}</td>
+            <td>{{ output.power_up.GL.starting_cp }}</td>
+            <td>{{ output.power_up.ML.power_up_count }}</td>
+            <td>{{ output.power_up.ML.stardust_cost }}</td>
+            <td>{{ output.power_up.ML.candy_cost }}</td>
+            <td>{{ output.power_up.ML.xlcandy_cost }}</td>
+            <td>{{ output.stats.ML.stat_product|floatformat:"0" }}</td>
           </tr>
+          {% endfor %}    
           {% endif %}
           </tbody>
         </table>

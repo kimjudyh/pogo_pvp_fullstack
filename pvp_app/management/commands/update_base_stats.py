@@ -5,6 +5,8 @@ from fullstack_pvp_project.settings import BASE_DIR
 import os
 import csv
 
+# to run this: $ python manage.py update_base_stats
+
 def old_copy_from_csv():
     # TODO: come up with way that can write base stats to database without needing special permissions
     # in heroku db CLI, open psql and use:

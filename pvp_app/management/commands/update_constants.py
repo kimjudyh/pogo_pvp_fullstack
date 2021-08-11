@@ -4,6 +4,8 @@ from pvp_app.models import CPMultipliers, LevelPowerUpCosts
 from fullstack_pvp_project.settings import BASE_DIR
 import os
 
+# to run this: $ python manage.py update_constants
+
 # read and process cp multiplier data text file
 def read_cp_mult():
     '''

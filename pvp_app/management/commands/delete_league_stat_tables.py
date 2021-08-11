@@ -4,6 +4,8 @@ from pvp_app.models import PokemonPVP
 from fullstack_pvp_project.settings import BASE_DIR
 import os
 
+# to run this: $ python manage.py delete_league_stat_tables
+
 def delete_old_entries():
     # deletes entries from League stats table
     PokemonPVP.objects.all().delete()

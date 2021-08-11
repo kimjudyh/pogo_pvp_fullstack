@@ -24,9 +24,22 @@ def analyze(request):
         max_level   = request.POST['max_level']
 
         # get stat product for the requested evolution pokemon
-        evo_pokemon_pvp = LeagueStats(evo_pokemon.lower())
         pokemon_power_up = PowerUpStats(req_pokemon.lower())
+        matches = [evo_pokemon.lower()]
+        if evo_pokemon.lower() == "all":
+            found_match = EvolutionTable.objects.filter(species__iexact=req_pokemon.lower())
+            if bool(found_match):
+                matches = found_match.first().evolution
+            else:
+                matches = []
 
+            target_evolutions = []
+            for evo in matches:
+                target_evolutions.append(LeagueStats(evo.lower()))
+        else:
+            target_evolutions = [LeagueStats(evo_pokemon.lower())]
+
+        print('first target evolutions', target_evolutions)
         # check for valid Pokemon input
         species_is_valid = pokemon_power_up.verify_pokemon()
         if not species_is_valid:
@@ -38,7 +51,9 @@ def analyze(request):
             return render(request, template, context)
         
         # check for valid evolution Pokemon input
-        evo_species_is_valid = evo_pokemon_pvp.verify_evo_pokemon()
+        evo_species_is_valid = True
+        for evo_pokemon_pvp in target_evolutions:
+            evo_species_is_valid = evo_species_is_valid and evo_pokemon_pvp.verify_evo_pokemon()
         if not evo_species_is_valid:
             context = {
                 'pokemon': req_pokemon,
@@ -113,23 +128,31 @@ def analyze(request):
                     power_up = {}
                 else:
                     # proceed
+                    print('target evolutions', target_evolutions)
+                    one_result = []
+                    for evo_pokemon_pvp in target_evolutions:
+                        per_evolution = {'evo': evo_pokemon_pvp.pokemon, 'stats': {}, 'power_up': {}}
+                        if analyze_GL:
+                            stats_GL = evo_pokemon_pvp.get_stat_product('GL', int(attack), int(defense), int(stamina), float(max_level))
+                            per_evolution['stats']['GL'] = stats_GL
+                        if analyze_UL:
+                            stats_UL = evo_pokemon_pvp.get_stat_product('UL', int(attack), int(defense), int(stamina), float(max_level))
+                            per_evolution['stats']['UL'] = stats_UL
+                        if analyze_ML:
+                            stats_ML = evo_pokemon_pvp.get_stat_product('ML', int(attack), int(defense), int(stamina), float(max_level))
+                            per_evolution['stats']['ML'] = stats_ML
+                        # calc power up for each evo, add to array
+                        power_up_loop = pokemon_power_up.calc_evolve_cp(evo_pokemon_pvp.pokemon.lower(), int(cp), int(attack), int(defense), int(stamina), float(max_level))
+                        # add starting level to inputs dic
+                        inputs['starting_level'] = power_up_loop['GL']['starting_level']
+                        # power_up.append(power_up_loop)
+                        per_evolution['power_up'] = power_up_loop
+                        one_result.append(per_evolution)
 
-                    if analyze_GL:
-                        stats_GL = evo_pokemon_pvp.get_stat_product('GL', int(attack), int(defense), int(stamina), float(max_level))
-                        stats['GL'] = stats_GL
-                    if analyze_UL:
-                        stats_UL = evo_pokemon_pvp.get_stat_product('UL', int(attack), int(defense), int(stamina), float(max_level))
-                        stats['UL'] = stats_UL
-                    if analyze_ML:
-                        stats_ML = evo_pokemon_pvp.get_stat_product('ML', int(attack), int(defense), int(stamina), float(max_level))
-                        stats['ML'] = stats_ML
-
-                    power_up = pokemon_power_up.calc_evolve_cp(evo_pokemon.lower(), int(cp), int(attack), int(defense), int(stamina), float(max_level))
-
+                # print('stats', stats)
                 results.append({
                     'inputs': inputs,
-                    'stats': stats,
-                    'power_up': power_up
+                    'outputs': one_result
                 })
 
         # print(results)
@@ -137,6 +160,7 @@ def analyze(request):
         context = {
             'pokemon': req_pokemon,
             'evolution': evo_pokemon,
+            'evolution_names': matches,
             'max_level': max_level,
             'analyze_GL': analyze_GL,
             'analyze_UL': analyze_UL,
