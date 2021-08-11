@@ -116,8 +116,6 @@ let evoPokemonInput = document.querySelector('#evo-pokemon');
 pokemonInput.addEventListener('keyup', findMatches);
 // add event listener to completion inside pokemon input field
 pokemonInput.addEventListener('focusout', getEvolutions);
-// add event listener to evo pokemon input field
-// evoPokemonInput.addEventListener('keyup', findMatches);
 
 // event listener to check for invalid Pokemon or evolution pokemon entries
 // pokemonInput.addEventListener('keyup', checkForInvalidInputs);
