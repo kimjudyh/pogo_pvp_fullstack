@@ -42,34 +42,16 @@ def analyze(request):
         print('first target evolutions', target_evolutions)
         # check for valid Pokemon input
         species_is_valid = pokemon_power_up.verify_pokemon()
-        if not species_is_valid:
-            context = {
-                'pokemon': req_pokemon,
-                'evolution': evo_pokemon,
-                'error': f'Invalid Pokemon: {req_pokemon}'
-            }
-            return render(request, template, context)
         
         # check for valid evolution Pokemon input
         evo_species_is_valid = True
         for evo_pokemon_pvp in target_evolutions:
             evo_species_is_valid = evo_species_is_valid and evo_pokemon_pvp.verify_evo_pokemon()
-        if not evo_species_is_valid:
-            context = {
-                'pokemon': req_pokemon,
-                'evolution': evo_pokemon,
-                'error': f'Invalid Evolution: {evo_pokemon}'
-            }
-            return render(request, template, context)
         
         # check for valid max level input (40 <= max_level <= 51)
+        max_level_valid = True
         if float(max_level) < 40 or float(max_level) > 51:
-            context = {
-                'pokemon': req_pokemon,
-                'evolution': evo_pokemon,
-                'error': f'Invalid Max Level: {max_level}'
-            }
-            return render(request, template, context)
+            max_level_valid = False
 
         results = []
         # stats_array = []
@@ -118,14 +100,17 @@ def analyze(request):
                 inputs['cp'] = cp
 
                 # verify IVs and CP
-                is_valid = pokemon_power_up.verify_IV_inputs(int(cp), int(attack), int(defense), int(stamina))
+                is_valid = True
+                if species_is_valid:
+                    is_valid = pokemon_power_up.verify_IV_inputs(int(cp), int(attack), int(defense), int(stamina))
 
                 inputs['is_valid'] = is_valid
 
-                if not is_valid:
+                if not is_valid or not evo_species_is_valid or not max_level_valid or not species_is_valid:
                     # mark this entry as wrong to display on html
                     # print('invalid')
                     power_up = {}
+                    one_result = []
                 else:
                     # proceed
                     print('target evolutions', target_evolutions)
@@ -156,6 +141,44 @@ def analyze(request):
                 })
 
         # print(results)
+        if not species_is_valid:
+            context = {
+                'pokemon': req_pokemon,
+                'evolution': evo_pokemon,
+                'max_level': max_level,
+                'analyze_GL': analyze_GL,
+                'analyze_UL': analyze_UL,
+                'analyze_ML': analyze_ML,
+                'results': results,
+                'error': f'Invalid Pokemon: {req_pokemon}'
+            }
+            return render(request, template, context)
+
+        if not evo_species_is_valid:
+            context = {
+                'pokemon': req_pokemon,
+                'evolution': evo_pokemon,
+                'max_level': max_level,
+                'analyze_GL': analyze_GL,
+                'analyze_UL': analyze_UL,
+                'analyze_ML': analyze_ML,
+                'results': results,
+                'error': f'Invalid Evolution: {evo_pokemon}'
+            }
+            return render(request, template, context)
+        
+        if not max_level_valid:
+            context = {
+                'pokemon': req_pokemon,
+                'evolution': evo_pokemon,
+                'max_level': max_level,
+                'analyze_GL': analyze_GL,
+                'analyze_UL': analyze_UL,
+                'analyze_ML': analyze_ML,
+                'results': results,
+                'error': f'Invalid Max Level: {max_level}'
+            }
+            return render(request, template, context)
 
         context = {
             'pokemon': req_pokemon,
