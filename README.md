@@ -35,10 +35,9 @@ Results for all Leagues
 * Evolution Pokemon look-up and autocomplete - once the Pokemon is chosen, a search is done for all possible evolutions. The results are then used to populate the select menu with options.
 
 ## Future Work
-* Galarian Pokemon need to be added
-* Best Buddy boost
 * Lucky Pokemon stardust discount
 * Shadow & Purified stardust cost difference
+* Condensed output format
 
 ## Data Models
 1. Base Stats
