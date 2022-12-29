@@ -99,7 +99,7 @@
 79,Slowpoke,207,109,98
 79G,Galarian Slowpoke,207,109,98
 80,Slowbro,216,177,180
-80G,Galarian Slowbro,216,177,180
+80G,Galarian Slowbro,216,182,156
 81,Magnemite,93,165,121
 82,Magneton,137,223,169
 83,Farfetchd,141,124,115
@@ -150,7 +150,7 @@
 120,Staryu,102,137,112
 121,Starmie,155,210,184
 122,Mr. Mime,120,192,205
-122G,Galarian Mr. Mime,120,192,205
+122G,Galarian Mr. Mime,137,183,169
 123,Scyther,172,218,170
 124,Jynx,163,223,151
 125,Electabuzz,163,198,158
@@ -173,11 +173,11 @@
 142,Aerodactyl,190,221,159
 143,Snorlax,330,190,169
 144,Articuno,207,192,236
-144G,Galarian Articuno,207,192,236
+144G,Galarian Articuno,207,250,197
 145,Zapdos,207,253,185
-145G,Galarian Zapdos,207,253,185
+145G,Galarian Zapdos,207,252,189
 146,Moltres,207,251,181
-146G,Galarian Moltres,207,251,181
+146G,Galarian Moltres,207,202,231
 147,Dratini,121,119,91
 148,Dragonair,156,163,135
 149,Dragonite,209,263,198
@@ -234,6 +234,7 @@
 197,Umbreon,216,126,240
 198,Murkrow,155,175,87
 199,Slowking,216,177,180
+199G,Galarian Slowking,216,190,180
 200,Misdreavus,155,167,154
 201,Unown,134,136,91
 202,Wobbuffet,382,60,106
@@ -259,7 +260,7 @@
 220,Swinub,137,90,69
 221,Piloswine,225,181,138
 222,Corsola,146,118,156
-222G,Galarian Corsola,146,118,156
+222G,Galarian Corsola,155,116,182
 223,Remoraid,111,127,69
 224,Octillery,181,197,141
 225,Delibird,128,128,90
