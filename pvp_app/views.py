@@ -37,7 +37,10 @@ def analyze(request):
             for evo in matches:
                 target_evolutions.append(LeagueStats(evo.lower()))
         else:
-            target_evolutions = [LeagueStats(evo_pokemon.lower())]
+            evolutions = evo_pokemon.lower().split(',')
+            target_evolutions = []
+            for evo in evolutions:
+                target_evolutions.append(LeagueStats(evo.lower()))
 
         print('first target evolutions', target_evolutions)
         # check for valid Pokemon input
