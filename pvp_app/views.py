@@ -25,7 +25,8 @@ def analyze(request):
 
         # get stat product for the requested evolution pokemon
         pokemon_power_up = PowerUpStats(req_pokemon.lower())
-        matches = [evo_pokemon.lower()]
+        # `matches` is the list of evolution pokemon
+        matches = [evo.strip() for evo in evo_pokemon.lower().split(',')]
         if evo_pokemon.lower() == "all":
             found_match = EvolutionTable.objects.filter(species__iexact=req_pokemon.lower())
             if bool(found_match):
@@ -37,10 +38,9 @@ def analyze(request):
             for evo in matches:
                 target_evolutions.append(LeagueStats(evo.lower()))
         else:
-            evolutions = evo_pokemon.lower().split(',')
             target_evolutions = []
-            for evo in evolutions:
-                target_evolutions.append(LeagueStats(evo.strip()))
+            for evo in matches:
+                target_evolutions.append(LeagueStats(evo))
 
         print('first target evolutions', target_evolutions)
         # check for valid Pokemon input
