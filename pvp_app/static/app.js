@@ -14,7 +14,7 @@ const max_level_input = document.querySelector('#max-level');
 max_level_input.addEventListener('focusout', (event) => {
   // validate max level input
   if (event.target.value === "") {
-    event.target.value = 40
+    event.target.value = 51
   }
   else if (event.target.value > 51 || event.target.value < 40) {
     event.target.classList.add('invalid');
