@@ -19,8 +19,8 @@ def analyze(request):
 
         # deal with multiple entries
 
-        req_pokemon = request.POST['pokemon']
-        evo_pokemon = request.POST['evo-pokemon']
+        req_pokemon = request.POST['pokemon'].strip()
+        evo_pokemon = request.POST['evo-pokemon'].strip()
         max_level   = request.POST['max_level']
 
         # get stat product for the requested evolution pokemon
@@ -40,7 +40,7 @@ def analyze(request):
             evolutions = evo_pokemon.lower().split(',')
             target_evolutions = []
             for evo in evolutions:
-                target_evolutions.append(LeagueStats(evo.lower()))
+                target_evolutions.append(LeagueStats(evo.strip()))
 
         print('first target evolutions', target_evolutions)
         # check for valid Pokemon input
