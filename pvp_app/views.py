@@ -88,10 +88,11 @@ def analyze(request):
         a = request.POST.getlist('attack')
         d = request.POST.getlist('defense')
         s = request.POST.getlist('stamina')
+        t = request.POST.getlist('tag')
         # print(c, a, d, s)
 
         # multiple entries: 'attack': [1, 3, 6] etc.
-        for cp, attack, defense, stamina in zip(c, a, d, s):
+        for cp, attack, defense, stamina, tag in zip(c, a, d, s, t):
             stats = {}
             inputs = {}
 
@@ -101,6 +102,7 @@ def analyze(request):
                 inputs['defense'] = defense
                 inputs['stamina'] = stamina
                 inputs['cp'] = cp
+                inputs['tag'] = tag
 
                 # verify IVs and CP
                 is_valid = True

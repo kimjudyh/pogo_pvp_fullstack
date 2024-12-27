@@ -80,8 +80,8 @@
           <label for="stamina" class="sr-only">Stamina IV</label>
           <input class="form-control form-control-sm w-15" type="number" id="stamina" name="stamina" value="{{ result.inputs.stamina }}" placeholder="STM" required>
 
-          <label for="label" class="sr-only">Label</label>
-          <input class="form-control form-control-sm w-15" id="label" name="label" value="{{ result.inputs.label }}" placeholder="LABEL">
+          <label for="tag" class="sr-only">Tag</label>
+          <input class="form-control form-control-sm w-15" id="tag" name="tag" value="{{ result.inputs.tag }}" placeholder="TAG">
 	</div>
         {% endfor %}
       {% else %}
@@ -100,8 +100,8 @@
           <label for="stamina" class="sr-only">Stamina IV</label>
           <input class="form-control form-control-sm w-15" type="number" id="stamina" name="stamina" placeholder="STM" required>
 
-          <label for="label" class="sr-only">Label</label>
-          <input class="form-control form-control-sm w-15" id="label" name="label"  placeholder="LABEL">
+          <label for="tag" class="sr-only">Tag</label>
+          <input class="form-control form-control-sm w-15" id="tag" name="tag"  placeholder="TAG">
         </div>
       {% endif %}
       </div>
@@ -141,12 +141,20 @@
       <h4>{{ pokemon }} -> {{ evolution }}</h4>
       {% for result in results %}
         <div class="row no-gutters">
-          <div class="col col-2">Label: {{ result.inputs.label }}</div>
           <div class="col col-2">CP: {{ result.inputs.cp }}</div>
           <div class="col col-2">A: {{ result.inputs.attack }}</div>
           <div class="col col-2">D: {{ result.inputs.defense }}</div>
           <div class="col col-2">S: {{ result.inputs.stamina}}</div>
-          <div class="col col-4">Starting Level: {{ result.inputs.starting_level }}</div>
+          <div class="col col-2">Starting Level: {{ result.inputs.starting_level }}</div>
+          {% if "shiny" in result.inputs.tag|lower %}
+            <div class="col col-2">Tag: ✨{{ result.inputs.tag }}✨</div>
+          {% elif result.inputs.tag == "shadow" %}
+            <div class="col col-2">Tag: 😈{{ result.inputs.tag }}😈</div>
+          {% elif result.inputs.tag == "purified" %}
+            <div class="col col-2">Tag: 😇{{ result.inputs.tag }}😇</div>
+          {% else %}
+            <div class="col col-2">Tag: {{ result.inputs.tag }}</div>
+          {% endif %}
         </div>
         {% if not result.inputs.is_valid %}
           <h6>Invalid CP & IV Combo</h4>
