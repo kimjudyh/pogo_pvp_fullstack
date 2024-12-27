@@ -141,12 +141,12 @@
       <h4>{{ pokemon }} -> {{ evolution }}</h4>
       {% for result in results %}
         <div class="row no-gutters">
-          <div class="col col-2">CP: {{ result.inputs.cp }}</div>
-          <div class="col col-2">A: {{ result.inputs.attack }}</div>
-          <div class="col col-2">D: {{ result.inputs.defense }}</div>
-          <div class="col col-2">S: {{ result.inputs.stamina}}</div>
-          <div class="col col-2">Starting Level: {{ result.inputs.starting_level }}</div>
-          <div class="col col-2">Tag: {{ result.inputs.tag }}</div>
+          <div class="col col-1">CP: {{ result.inputs.cp }}</div>
+          <div class="col col-1">A: {{ result.inputs.attack }}</div>
+          <div class="col col-1">D: {{ result.inputs.defense }}</div>
+          <div class="col col-1">S: {{ result.inputs.stamina}}</div>
+          <div class="col col-3">Starting Level: {{ result.inputs.starting_level }}</div>
+          <div class="col col-5">Tag: {{ result.inputs.decorated_tag }}</div>
         </div>
         {% if not result.inputs.is_valid %}
           <h6>Invalid CP & IV Combo</h4>
