@@ -23,7 +23,15 @@ def decorate(tag):
         emojis += '🦒'
     if 'xxs' in tag.lower():
         emojis += '🐭'
-    return emojis + tag + emojis.reverse()
+    if 'bg' in tag.lower() or 'background' in tag.lower():
+        emojis += '🖼️'
+    if 'lucky' in tag.lower():
+        emojis += '🍀'
+    if 'costume' in tag.lower() or 'hat' in tag.lower():
+        emojis += '🎩'
+    if 'starred' in tag.lower() or 'star' in tag.lower() or 'fav' in tag.lower() or 'favorite' in tag.lower():
+        emojis += '⭐️'
+    return emojis + tag + emojis[::-1]
 
 def analyze(request):
     if request.method == 'GET':
@@ -116,7 +124,8 @@ def analyze(request):
                 inputs['defense'] = defense
                 inputs['stamina'] = stamina
                 inputs['cp'] = cp
-                inputs['tag'] = decorate(tag)
+                inputs['tag'] = tag
+                inputs['decorated_tag'] = decorate(tag)
 
                 # verify IVs and CP
                 is_valid = True
