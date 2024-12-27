@@ -11,6 +11,20 @@ def home(request):
     return render(request, template)
 
 
+def decorate(tag):
+    emojis = ''
+    if 'shiny' in tag.lower():
+        emojis += '✨'
+    if 'shadow' in tag.lower():
+        emojis += '😈'
+    if 'purified' in tag.lower() or 'pure' in tag.lower():
+        emojis += '😇'
+    if 'xxl' in tag.lower():
+        emojis += '🦒'
+    if 'xxs' in tag.lower():
+        emojis += '🐭'
+    return emojis + tag + emojis.reverse()
+
 def analyze(request):
     if request.method == 'GET':
         return redirect('home')
@@ -102,7 +116,7 @@ def analyze(request):
                 inputs['defense'] = defense
                 inputs['stamina'] = stamina
                 inputs['cp'] = cp
-                inputs['tag'] = tag
+                inputs['tag'] = decorate(tag)
 
                 # verify IVs and CP
                 is_valid = True
