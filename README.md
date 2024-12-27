@@ -46,3 +46,51 @@ Results for all Leagues
     * Each Pokemon has its own table of PVP Stats
 3. Evolutions
 
+## Installation
+* Install PostgreSQL from https://www.postgresql.org/download/macosx/
+* Install virtualenv https://packaging.python.org/en/latest/guides/installing-using-pip-and-virtual-environments/
+python3 -m venv .venv
+source .venv/bin/activate
+* Add pg_config to PATH in ~/.bashrc (for example..)
+export PATH=$PATH:/Library/PostgreSQL/17/bin
+* Also add the SECRET_KEY to in ~/.bashrc
+* Make sure to add it to .venv PATH
+source ~/.bashrc
+* Install requirements
+pip install -r requirements.txt
+
+# Creating and Connecting to the PostgreSQL 17 server on Mac
+sudo mkdir -p /usr/local/var/postgres
+sudo chown `whoami` /usr/local/var/postgres
+pg_ctl initdb -D /usr/local/var/postgres
+* Had to kill postgres because I couldn't connect to port 5432
+sudo pkill -u postgres
+* start the server in directory specified
+pg_ctl start -D /usr/local/var/postgres
+
+# Create the pvp_db database
+createdb pvp_db
+
+## Development
+
+# Run the development server
+python manage.py runserver
+* Run on a specific server
+python manage.py runserver 8001
+
+# Management commands
+python manage.py update_base_stats
+python manage.py update_evolution_table
+python manage.py update_constants
+* If necessary, wipe out existing calculations of stat products
+python manage.py delete_league_stat_tables
+
+# Heroku
+* Log into Heroku, use Salesforce authenticator app
+heroku login
+* Deploy
+git push heroku master
+* Open Heroku's console
+heroku run bash
+exit
+
