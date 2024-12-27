@@ -146,15 +146,7 @@
           <div class="col col-2">D: {{ result.inputs.defense }}</div>
           <div class="col col-2">S: {{ result.inputs.stamina}}</div>
           <div class="col col-2">Starting Level: {{ result.inputs.starting_level }}</div>
-          {% if "shiny" in result.inputs.tag|lower %}
-            <div class="col col-2">Tag: ✨{{ result.inputs.tag }}✨</div>
-          {% elif result.inputs.tag == "shadow" %}
-            <div class="col col-2">Tag: 😈{{ result.inputs.tag }}😈</div>
-          {% elif result.inputs.tag == "purified" %}
-            <div class="col col-2">Tag: 😇{{ result.inputs.tag }}😇</div>
-          {% else %}
-            <div class="col col-2">Tag: {{ result.inputs.tag }}</div>
-          {% endif %}
+          <div class="col col-2">Tag: {{ result.inputs.tag }}</div>
         </div>
         {% if not result.inputs.is_valid %}
           <h6>Invalid CP & IV Combo</h4>
