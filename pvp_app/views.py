@@ -155,7 +155,7 @@ def analyze(request):
                             stats_ML = evo_pokemon_pvp.get_stat_product('ML', int(attack), int(defense), int(stamina), float(max_level))
                             per_evolution['stats']['ML'] = stats_ML
                         # calc power up for each evo, add to array
-                        power_up_loop = pokemon_power_up.calc_evolve_cp(evo_pokemon_pvp.pokemon.lower(), int(cp), int(attack), int(defense), int(stamina), float(max_level))
+                        power_up_loop = pokemon_power_up.calc_evolve_cp(evo_pokemon_pvp.pokemon.lower(), int(cp), int(attack), int(defense), int(stamina), float(max_level), tag)
                         # add starting level to inputs dic
                         inputs['starting_level'] = power_up_loop['GL']['starting_level']
                         # power_up.append(power_up_loop)
