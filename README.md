@@ -59,7 +59,7 @@ source ~/.bashrc
 * Install requirements
 pip install -r requirements.txt
 
-# Creating and Connecting to the PostgreSQL 17 server on Mac
+## Creating and Connecting to the PostgreSQL 17 server on Mac
 sudo mkdir -p /usr/local/var/postgres
 sudo chown `whoami` /usr/local/var/postgres
 pg_ctl initdb -D /usr/local/var/postgres
@@ -68,24 +68,27 @@ sudo pkill -u postgres
 * start the server in directory specified
 pg_ctl start -D /usr/local/var/postgres
 
-# Create the pvp_db database
+### Create the pvp_db database
 createdb pvp_db
 
 ## Development
 
-# Run the development server
+### Run the development server
 python manage.py runserver
 * Run on a specific server
 python manage.py runserver 8001
+* If static files are not updating, clear the browser's cache
 
-# Management commands
+### Management commands
 python manage.py update_base_stats
 python manage.py update_evolution_table
 python manage.py update_constants
 * If necessary, wipe out existing calculations of stat products
 python manage.py delete_league_stat_tables
+* Collect static files in deployment
+python manage.py collectstatic
 
-# Heroku
+## Heroku
 * Log into Heroku, use Salesforce authenticator app
 heroku login
 * Deploy
