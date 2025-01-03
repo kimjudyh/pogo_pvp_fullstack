@@ -89,6 +89,8 @@ python manage.py delete_league_stat_tables
 python manage.py collectstatic
 
 ## Heroku
+* One-time setup for adding a remote to local repo
+heroku git:remote -a fullstack-pvp
 * Log into Heroku, use Salesforce authenticator app
 heroku login
 * Deploy
